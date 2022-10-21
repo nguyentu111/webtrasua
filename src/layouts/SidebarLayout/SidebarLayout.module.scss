@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+}
+.container {
+  margin-top: calc(24px + var(--default-layout-header-height));
+  width: var(--default-layout-width);
+  max-width: 100%;
+  min-height: 1000px;
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  display: flex;
+  margin-top: 20px;
+}
+.children {
+  flex: 1;
+  margin-left: 24px;
+}
+.link {
+  color: var(--primary);
+  margin-right: 10px;
+}
