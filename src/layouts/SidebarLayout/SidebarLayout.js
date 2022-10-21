@@ -18,7 +18,7 @@ function SidebarLayout({ children }) {
         </div>
         <div className={cx("content")}>
           <Sidebar />
-          <div className={cx("chidren")}>{children}</div>
+          <div className={cx("children")}>{children}</div>
         </div>
       </div>
     </div>

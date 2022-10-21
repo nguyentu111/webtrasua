@@ -1,6 +1,11 @@
 .wrapper {
-  display: flex;
   margin-top: 100px;
-  align-items: center;
   justify-content: center;
+  display: flex;
+}
+.content {
+  width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }

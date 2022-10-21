@@ -2,7 +2,7 @@
 :root {
   --primary: rgb(0, 111, 60);
   --default-layout-header-height: 72px;
-  --default-layout-width: 1280px;
+  --default-layout-width: 1265px;
   --text-color: #333;
   --white: #fff;
   --black: #000;
@@ -10,6 +10,7 @@
   --border-color: #bdc3c7;
   --search-boder-radius: 30px;
   --search-icon-width: 40px;
+  --cool-border: 1px solid rgb(236, 239, 241);
 }
 * {
   box-sizing: border-box;

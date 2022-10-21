@@ -12,8 +12,8 @@ function Sidebar() {
       <Grid container>
         {categories.map((v, i) => {
           return (
-            <Grid item xs={6}>
-              <CategoryItem data={v} key={i} active={category} />
+            <Grid item xs={6} key={i}>
+              <CategoryItem smallWidth data={v} key={i} active={category} />
             </Grid>
           );
         })}

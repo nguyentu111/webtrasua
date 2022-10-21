@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import bavarageApi from "~/services/bavarageApi";
 import routes from "~/config/routes";
+import categories from "~/constant/category";
 const cx = classNames.bind(styles);
 function SuggessionProducts() {
   const [suggesBavarage, setSuggesBavarage] = useState([]);
@@ -35,7 +36,7 @@ function SuggessionProducts() {
           return <ProductCard data={v} key={v.id} />;
         })}
       </Grid>
-      <Link to={`${routes.products}`}>
+      <Link to={`${routes.products}/${categories[0].link}`}>
         <span className={cx("goto_products")}>Xem thêm</span>
       </Link>
     </div>

@@ -11,14 +11,15 @@
   min-height: 1000px;
   display: flex;
   flex-direction: column;
+  padding: 15px;
 }
 .content {
   display: flex;
   margin-top: 20px;
 }
 .children {
-  flex: 1;
   margin-left: 24px;
+  width: 100%;
 }
 .link {
   color: var(--primary);

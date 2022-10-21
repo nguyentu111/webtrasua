@@ -8,9 +8,11 @@ const cx = classNames.bind(styles);
 function Homecategories() {
   return (
     <div className={cx("wrapper")}>
-      {categories.map((v, i) => {
-        return <CategoryItem data={v} key={i} />;
-      })}
+      <div className={cx("content")}>
+        {categories.map((v, i) => {
+          return <CategoryItem data={v} key={i} />;
+        })}
+      </div>
     </div>
   );
 }

@@ -9,7 +9,11 @@ import Products from "~/pages/Products/Products";
 
 const publicRoutes = [
   { path: config.routes.home, component: Home, layout: DefaultLayout },
-  { path: config.routes.products, component: Products, layout: SidebarLayout },
+  {
+    path: config.routes.productChild,
+    component: Products,
+    layout: SidebarLayout,
+  },
   { path: config.routes.admin, component: AdminPage },
 ];
 const privateRoutes = [];

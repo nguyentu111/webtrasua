@@ -13,7 +13,6 @@ function ProductCard({ data }) {
   const handleClickBtn = (e) => {
     e.preventDefault();
     setOpenModel(true);
-    console.log("aaaa");
   };
   return (
     <>

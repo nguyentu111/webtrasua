@@ -1,6 +1,8 @@
+const products = "/san-pham";
 const routes = {
   home: "/",
-  products: "/san-pham/:category",
+  products: products,
+  productChild: `${products}/:category`,
   admin: "/admin",
 };
 export default routes;

@@ -1,0 +1,28 @@
+.wrapper {
+}
+.items {
+  display: flex;
+}
+.item {
+  font-size: 14px;
+  color: rgb(51, 51, 51);
+  padding: 5px 12px 10px 5px;
+  cursor: pointer;
+  border-bottom: 2px solid #fff;
+  &:hover {
+    border-bottom: 2px solid var(--primary);
+  }
+}
+.line {
+  margin-top: -3px;
+  border-width: 0px 0px 3px;
+  border-top-style: initial;
+  border-right-style: initial;
+  border-left-style: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-left-color: initial;
+  border-image: initial;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(236, 239, 241);
+}
