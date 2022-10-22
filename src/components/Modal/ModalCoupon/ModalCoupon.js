@@ -1,10 +1,8 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Box, Button, Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import classNames from "classnames/bind";
-import { useState } from "react";
-import logoList from "~/assets/images/logo";
-import styles from "./ModalSigin.module.scss";
+import styles from "./ModalCoupon.module.scss";
 const styleModal = {
   backgroundColor: "#fff",
   position: "absolute",
@@ -18,8 +16,7 @@ const styleModal = {
   borderRadius: "10px",
 };
 const cx = classNames.bind(styles);
-
-function ModalSignin({ openModel, setOpenModel }) {
+function ModalCoupon({ openModel, setOpenModel }) {
   return (
     <Modal
       open={openModel}
@@ -28,18 +25,6 @@ function ModalSignin({ openModel, setOpenModel }) {
       aria-describedby="modal-modal-description"
     >
       <Box style={styleModal} alignItems="center">
-        <div className={cx("modal-logo")}>
-          <Avatar
-            src={logoList.logo1}
-            alt="logo"
-            sx={{
-              bgcolor: "#fff",
-              border: "1px solid var(--border-color)",
-              width: "84px",
-              height: "84px",
-            }}
-          />
-        </div>
         <button
           className={cx("modal-close")}
           onClick={() => setOpenModel(false)}
@@ -47,13 +32,13 @@ function ModalSignin({ openModel, setOpenModel }) {
           <FontAwesomeIcon icon={faClose} />
         </button>
         <div className={cx("modal-content")}>
-          <div className={cx("modal-title")}>Phúc long xin chào</div>
-          <div className={cx("modal-sub-title")}>Đăng nhập</div>
+          <div className={cx("modal-title")}>Nhập mã giảm giá</div>
+
           <div className={cx("modal-body")}>
             <input
               type="text"
               className={cx("modal-input")}
-              placeholder="Số điện thoại hoặc mã khách hàng..."
+              placeholder="MÃ GIẢM GIÁ"
             />
             <div className="modal-btn">
               <Button
@@ -70,7 +55,7 @@ function ModalSignin({ openModel, setOpenModel }) {
                   },
                 }}
               >
-                ĐĂNG NHẬP
+                ÁP DỤNG
               </Button>
             </div>
           </div>
@@ -80,4 +65,4 @@ function ModalSignin({ openModel, setOpenModel }) {
   );
 }
 
-export default ModalSignin;
+export default ModalCoupon;

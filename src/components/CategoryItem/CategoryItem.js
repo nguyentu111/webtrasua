@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import styles from "./CategoryItem.module.scss";
+import styles from "~/components/CategoryItem/CategoryItem.module.scss";
 const cx = classNames.bind(styles);
 
 function CategoryItem({ data, active, smallWidth }) {

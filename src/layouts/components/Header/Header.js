@@ -4,11 +4,11 @@ import classnames from "classnames/bind";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoList from "~/assets/images/logo";
+import ModalSignin from "~/components/Modal/ModalSignin/ModalSignin";
 import Search from "../../../components/Search/Search";
 // import Search from "/Search";
 import styles from "./Header.module.scss";
 import Message from "./Message/Message";
-import ModalSignin from "./ModalSignin/ModalSignin";
 
 const cx = classnames.bind(styles);
 

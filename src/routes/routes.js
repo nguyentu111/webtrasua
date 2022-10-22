@@ -1,6 +1,6 @@
 import { Fragment } from "react";
+import { Navigate } from "react-router-dom";
 import config from "~/config";
-import Sidebar from "~/layouts/components/Sidebar";
 import DefaultLayout from "~/layouts/DefaultLayout";
 import SidebarLayout from "~/layouts/SidebarLayout/SidebarLayout";
 import AdminPage from "~/pages/Admin/AdminPage";
@@ -15,6 +15,10 @@ const publicRoutes = [
     layout: SidebarLayout,
   },
   { path: config.routes.admin, component: AdminPage },
+  {
+    path: "/*",
+    component: () => <Navigate to={"/"} />,
+  },
 ];
 const privateRoutes = [];
 

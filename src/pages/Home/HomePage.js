@@ -1,9 +1,11 @@
 import styles from "./HomePage.module.scss";
 import classNames from "classnames/bind";
-import Banner from "./Components/Banner/Banner";
-import Homecategories from "./Components/HomeCategories/HomeCategories";
+import Banner from "../../components/Banner/Banner";
 import React, { Suspense } from "react";
-import SuggessionProducts from "./Components/SuggessionProducts/SuggessionProducts";
+import SuggessionProducts from "~/components/SuggessionProducts/SuggessionProducts";
+import Homecategories from "~/components/HomeCategories/HomeCategories";
+import Cart from "~/components/Cart/Cart";
+
 const cx = classNames.bind(styles);
 
 function HomePage() {
@@ -13,8 +15,8 @@ function HomePage() {
         <Banner />
       </div>
       <Homecategories />
-
       <SuggessionProducts />
+      <Cart />
     </div>
   );
 }

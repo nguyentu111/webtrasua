@@ -16,23 +16,22 @@ function ProductCard({ data }) {
   };
   return (
     <>
-      <Link to={`products/${data.id}`}>
-        <Grid item>
-          <div className={cx("wrapper")}>
-            <div className={cx("image-wrapper")}>
-              <img src={data.image} alt="" className={cx("image")} />
-            </div>
-            <div className={cx("content")}>
-              <span className={cx("name")}>{data.name}</span>
-              <span className={cx("price")}>{data.price}&nbsp;đ</span>
-              <button className={cx("button")} onClick={handleClickBtn}>
-                <FontAwesomeIcon icon={faCartPlus} />
-                <span style={{ marginLeft: "10px" }}>Đặt mua</span>
-              </button>
-            </div>
+      <Grid item>
+        <div className={cx("wrapper")}>
+          <div className={cx("image-wrapper")}>
+            <img src={data.image} alt="" className={cx("image")} />
           </div>
-        </Grid>
-      </Link>
+          <div className={cx("content")}>
+            <span className={cx("name")}>{data.name}</span>
+            <span className={cx("price")}>{data.price}&nbsp;đ</span>
+            <button className={cx("button")} onClick={handleClickBtn}>
+              <FontAwesomeIcon icon={faCartPlus} />
+              <span style={{ marginLeft: "10px" }}>Đặt mua</span>
+            </button>
+          </div>
+        </div>
+      </Grid>
+
       <BookBavarage openModel={openModel} setOpenModel={setOpenModel} />
     </>
   );

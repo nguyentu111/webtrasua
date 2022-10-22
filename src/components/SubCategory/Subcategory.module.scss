@@ -4,14 +4,25 @@
   display: flex;
 }
 .item {
-  font-size: 14px;
+  font-size: 1.4rem;
   color: rgb(51, 51, 51);
-  padding: 5px 12px 10px 5px;
   cursor: pointer;
-  border-bottom: 2px solid #fff;
+
   &:hover {
-    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
   }
+}
+a.link {
+  padding: 10px;
+  font-size: 1.4rem;
+  border-bottom: 2px solid rgb(236, 239, 241);
+}
+a:has(.acitve),
+.link:hover {
+  border-bottom: 2px solid var(--primary);
+}
+.acitve {
+  color: var(--primary);
 }
 .line {
   margin-top: -3px;

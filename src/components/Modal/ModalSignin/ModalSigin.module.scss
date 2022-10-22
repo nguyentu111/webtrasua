@@ -29,10 +29,15 @@
   border: 1px solid #bdc3c7;
   margin-bottom: 16px;
   border-radius: 5px;
-  &:hover {
-    border: 1px solid #333;
+  &:hover,
+  &:focus {
+    border: 1px solid var(--primary);
+  }
+  &.error {
+    border: 2px solid red;
   }
 }
+
 .modal-close {
   position: absolute;
   top: 0;

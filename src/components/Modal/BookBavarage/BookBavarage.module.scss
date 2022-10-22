@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   width: fit-content;
-  background-color: #fff;
+  // background-color: #fff;
   border-radius: 20px;
   padding: 20px 30px;
   flex-direction: column;
@@ -103,10 +103,13 @@
 .quantity-value {
   margin: 0 10px;
 }
-
 .quantity-increase-btn {
 }
 
+.options {
+  max-height: 350px;
+  overflow-y: scroll;
+}
 .option-title {
   margin-top: 4px;
   padding-bottom: 4px;
@@ -202,4 +205,5 @@
   padding: 8px;
   font-size: 1.5rem;
   margin-top: 20px;
+  cursor: pointer;
 }
