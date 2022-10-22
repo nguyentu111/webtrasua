@@ -1,11 +1,12 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Box, Button, Input, Modal, TextField } from "@mui/material";
-import { height } from "@mui/system";
+import { Avatar, Box, Modal } from "@mui/material";
 import classNames from "classnames/bind";
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import logoList from "~/assets/images/logo";
 import styles from "./ModalSigin.module.scss";
+import Validator from "~/constant/validator/validator";
+import "./ModalSignin.css";
 const styleModal = {
   backgroundColor: "#fff",
   position: "absolute",
@@ -21,22 +22,18 @@ const styleModal = {
 const cx = classNames.bind(styles);
 
 function ModalSignin({ openModel, setOpenModel }) {
-  const [inputValue, setInputValue] = useState("");
-  const [errorInput, setErrorInput] = useState("");
-  const refInput = useRef();
-  const checkValue = (value) => {
-    if (value.trim() === "") {
-      setErrorInput("Thông tin bắt buộc");
-      return false;
-    } else return true;
+  const handleSubmit = () => {
+    Validator({
+      form: "#form-1",
+      formGroupSelector: ".form-group",
+      errorSelector: ".form-message",
+      rules: [Validator.isRequired("#singin-input", "Thông tin bắt buộc")],
+      onSubmit: function (data) {
+        console.log(data);
+      },
+    });
   };
-  const handleClickBtn = () => {
-    const bool = checkValue(refInput.current.value);
-    if (bool) console.log(refInput.current.value);
-  };
-  const handleBlur = () => {
-    checkValue(refInput.current.value);
-  };
+
   return (
     <Modal
       open={openModel}
@@ -66,46 +63,41 @@ function ModalSignin({ openModel, setOpenModel }) {
         <div className={cx("modal-content")}>
           <div className={cx("modal-title")}>Phúc long xin chào</div>
           <div className={cx("modal-sub-title")}>Đăng nhập</div>
-          <div className={cx("modal-body")}>
-            <input
-              ref={refInput}
-              type="text"
-              className={cx("modal-input", { error: errorInput === "" })}
-              placeholder="Số điện thoại hoặc mã khách hàng..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onBlur={handleBlur}
-            />
-            <label
-              style={{
-                fontSize: "1.4rem",
-                color: "red",
-                display: errorInput ? "error" : "",
-                marginBottom: "16px",
-              }}
-            >
-              {errorInput}
-            </label>
-            <div className="modal-btn">
-              <Button
-                variant="contained"
-                onClick={handleClickBtn}
-                sx={{
-                  width: "100%",
-                  backgroundColor: "var(--primary)",
-                  fontWeight: "600",
-                  fontSize: "1.4rem",
-                  marginBottom: "10px",
-                  "&: hover": {
-                    opacity: 0.9,
-                    backgroundColor: "var(--primary)",
-                  },
-                }}
-              >
-                ĐĂNG NHẬP
-              </Button>
+          <form action="" method="POST" className={cx("form")} id="form-1">
+            <div className={cx("modal-body")}>
+              {/* <input
+                type="text"
+                className={cx("modal-input")}
+                placeholder="Số điện thoại hoặc mã khách hàng..."
+              /> */}
+              <div className="form-group">
+                <input
+                  id="singin-input"
+                  name="singin-input"
+                  type="text"
+                  placeholder="Nhập số điện thoại"
+                  className={"form-control"}
+                  autoComplete="off"
+                />
+                <span className={"form-message"}></span>
+              </div>
+              <button className={cx("form-submit")} onClick={handleSubmit}>
+                Đăng nhập
+              </button>
+
+              {/* <div className="modal-btn">
+                <Button
+                  variant="contained"
+                  onClick={handleClickBtn}
+                  sx={{
+                    
+                  }}
+                >
+                  ĐĂNG NHẬP
+                </Button>
+              </div> */}
             </div>
-          </div>
+          </form>
         </div>
       </Box>
     </Modal>
