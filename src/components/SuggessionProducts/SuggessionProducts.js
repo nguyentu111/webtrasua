@@ -1,6 +1,5 @@
 import styles from "./SuggessionProducts.module.scss";
 import classNames from "classnames/bind";
-import images from "~/assets/images/bavarage";
 import ProductCard from "~/components/ProductCard/ProductCard";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";

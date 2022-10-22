@@ -1,13 +1,9 @@
-import { Box, keyframes, Modal } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import classNames from "classnames/bind";
 import styles from "./BookBavarage.module.scss";
 import images from "~/assets/images/bavarage";
 import { useState } from "react";
-import {
-  faCartFlatbedSuitcase,
-  faCartPlus,
-  faClose,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const styleModal = {
   backgroundColor: "#fff",

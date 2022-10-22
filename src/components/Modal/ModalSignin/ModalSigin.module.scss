@@ -14,12 +14,6 @@
   font-family: "Baloo 2";
 }
 
-.modal-sub-title {
-  margin-top: 5px;
-  margin-bottom: 30px;
-  font-size: 1.4rem;
-  text-align: center;
-}
 .modal-body {
   display: flex;
   flex-direction: column;
@@ -64,34 +58,4 @@
   z-index: 999;
   cursor: pointer;
   border-radius: 12px;
-}
-///////////////from css
-.form-submit {
-  border-radius: 5px;
-  width: 100%;
-  background-color: var(--primary);
-  font-weight: 600;
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-  height: 30px;
-  color: #fff;
-  &:hover {
-    opacity: 0.9;
-  }
-}
-
-.form-label,
-.form-message {
-  text-align: left;
-}
-
-.form-label {
-  font-weight: 700;
-  padding-bottom: 6px;
-  line-height: 1.8rem;
-  font-size: 1.4rem;
-}
-
-.form-control:hover {
-  border-color: #1dbfaf;
 }

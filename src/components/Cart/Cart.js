@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Drawer } from "@mui/material";
 import classNames from "classnames/bind";
 import React, { useState } from "react";
-import images from "~/assets/images/bavarage";
 import CartItem from "../CartItem/CartItem";
 import ModalCoupon from "../Modal/ModalCoupon/ModalCoupon";
 import styles from "./Cart.module.scss";
@@ -17,9 +16,7 @@ function Cart() {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const anchor = "right";
-  const handleClick = () => {
-    console.log("click");
-  };
+
   return (
     <>
       <div className={cx("wrapper")}>

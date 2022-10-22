@@ -2,11 +2,11 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Box, Modal } from "@mui/material";
 import classNames from "classnames/bind";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 import logoList from "~/assets/images/logo";
+import FormPassWord from "./FormPassWord/FormPassWord";
+import FormPhone from "./FormPhone/FormPhone";
 import styles from "./ModalSigin.module.scss";
-import Validator from "~/constant/validator/validator";
-import "./ModalSignin.css";
 const styleModal = {
   backgroundColor: "#fff",
   position: "absolute",
@@ -22,18 +22,8 @@ const styleModal = {
 const cx = classNames.bind(styles);
 
 function ModalSignin({ openModel, setOpenModel }) {
-  const handleSubmit = () => {
-    Validator({
-      form: "#form-1",
-      formGroupSelector: ".form-group",
-      errorSelector: ".form-message",
-      rules: [Validator.isRequired("#singin-input", "Thông tin bắt buộc")],
-      onSubmit: function (data) {
-        console.log(data);
-      },
-    });
-  };
-
+  const [form, setForm] = useState(1);
+  const [phoneNumber, setPhoneNumber] = useState("");
   return (
     <Modal
       open={openModel}
@@ -62,42 +52,15 @@ function ModalSignin({ openModel, setOpenModel }) {
         </button>
         <div className={cx("modal-content")}>
           <div className={cx("modal-title")}>Phúc long xin chào</div>
-          <div className={cx("modal-sub-title")}>Đăng nhập</div>
-          <form action="" method="POST" className={cx("form")} id="form-1">
-            <div className={cx("modal-body")}>
-              {/* <input
-                type="text"
-                className={cx("modal-input")}
-                placeholder="Số điện thoại hoặc mã khách hàng..."
-              /> */}
-              <div className="form-group">
-                <input
-                  id="singin-input"
-                  name="singin-input"
-                  type="text"
-                  placeholder="Nhập số điện thoại"
-                  className={"form-control"}
-                  autoComplete="off"
-                />
-                <span className={"form-message"}></span>
-              </div>
-              <button className={cx("form-submit")} onClick={handleSubmit}>
-                Đăng nhập
-              </button>
 
-              {/* <div className="modal-btn">
-                <Button
-                  variant="contained"
-                  onClick={handleClickBtn}
-                  sx={{
-                    
-                  }}
-                >
-                  ĐĂNG NHẬP
-                </Button>
-              </div> */}
-            </div>
-          </form>
+          <div className={cx("modal-body")}>
+            {form === 1 && (
+              <FormPhone setForm={setForm} setPhoneNumber={setPhoneNumber} />
+            )}
+            {form === 2 && (
+              <FormPassWord setForm={setForm} phoneNumber={phoneNumber} />
+            )}
+          </div>
         </div>
       </Box>
     </Modal>

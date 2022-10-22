@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import styles from "./HomeCategories.module.scss";
-import images from "~/assets/images/category";
 import categories from "~/constant/category";
 const cx = classNames.bind(styles);
 
