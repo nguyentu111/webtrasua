@@ -25,7 +25,8 @@ function InputField(props) {
   const { field, form, type, label, placeholder, disabled, autoFocus } = props;
   const { name } = field;
   const { errors, touched } = form;
-  const showError = Boolean(errors[name]); // có message lỗi và touched=true thì trả ra true
+
+  const showError = errors[name]; // có message lỗi và touched=true thì trả ra true
   // console.log('form: ', form);
   // console.log('field: ', field);
   return (
@@ -38,7 +39,7 @@ function InputField(props) {
         type={type}
         disabled={disabled}
         placeholder={placeholder}
-        // invalid={showError}
+        invalid={showError}
         className={cx("input", { invalid: showError })}
         autoFocus={autoFocus}
       />

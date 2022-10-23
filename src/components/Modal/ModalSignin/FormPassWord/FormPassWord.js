@@ -4,7 +4,6 @@ import { FastField, Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "~/components/custom-fields/InputField";
 import styles from "./FormPassWord.module.scss";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { loginUser } from "~/app/userSlice";
@@ -12,7 +11,7 @@ const cx = classNames.bind(styles);
 
 function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
   const dispatch = useDispatch();
-  const nav = useNavigate();
+
   const validationShema = Yup.object().shape({
     password: Yup.string().required("Thông tin bắt buộc"),
   });

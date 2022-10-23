@@ -1,6 +1,5 @@
-import { useDispatch } from "react-redux";
-import { logout } from "~/app/userSlice";
 import Logout from "~/layouts/components/Logout/Logout";
+import Account from "~/pages/Customer/Account/Account";
 
 const { default: images } = require("~/assets/images/accountMenu");
 export const listItems = [
@@ -8,7 +7,7 @@ export const listItems = [
     image: images.userCard,
     title: "Thông tin cá nhân",
     link: `account`,
-    element: <>Trang thong tin ca nhan</>,
+    element: <Account />,
   },
   {
     image: images.userCard,

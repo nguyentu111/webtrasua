@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormFeedback, FormGroup, Label } from 'reactstrap';
-import Select from 'react-select';
-import { ErrorMessage } from 'formik';
+import PropTypes from "prop-types";
+import React from "react";
+import { FormFeedback, FormGroup, Label } from "reactstrap";
+import Select from "react-select";
+import { ErrorMessage } from "formik";
 
 SelectField.propTypes = {
   field: PropTypes.object.isRequired,
@@ -15,8 +15,8 @@ SelectField.propTypes = {
 };
 
 SelectField.defaultProps = {
-  label: '',
-  placeholder: '',
+  label: "",
+  placeholder: "",
   disabled: false,
   options: [],
 };
@@ -25,17 +25,35 @@ function SelectField(props) {
   const { field, options, form, label, placeholder, disabled } = props;
   const { name, value } = field;
   const { errors, touched } = form;
+  console.log(form);
   const showError = errors[name] && touched[name];
+  // console.log(errors[name]);
   const selectedValue = options.find((option) => option.value === value);
   const handleSelectedOptionChange = (selectedOption) => {
-    const selectedValue = selectedOption ? selectedOption.value : selectedOption;
+    const selectedValue = selectedOption
+      ? selectedOption.value
+      : selectedOption;
+    const changeEvent = {
+      target: {
+        name: name,
+        value: "",
+      },
+    };
+    field.onChange(changeEvent);
+  };
+  const handleOnBlur = (e) => {
+    const selectedOption = e.target.value;
+    const selectedValue = selectedOption
+      ? selectedOption.value
+      : selectedOption;
+
     const changeEvent = {
       target: {
         name: name,
         value: selectedValue,
       },
     };
-    field.onChange(changeEvent);
+    field.onBlur(changeEvent);
   };
   return (
     <FormGroup>
@@ -46,11 +64,13 @@ function SelectField(props) {
         {...field} // field có 4 thuộc tính là name , value, onChange,onBlur
         value={selectedValue}
         onChange={handleSelectedOptionChange} //override onchange trong ..field
+        // onBlur={handleOnBlur}
         isDisabled={disabled}
         placeholder={placeholder}
         options={options}
-        className={showError ? 'is-invalid' : ''}
+        className={showError ? "is-invalid" : ""}
       />
+
       <ErrorMessage name={name} component={FormFeedback} />
 
       {/* FormFeedback cần thằng đứng trước nó (ở đây là select) có class is-invalid, thằng input có sẵn 

@@ -28,6 +28,7 @@ function Account({ setOpenModel }) {
         animation={false}
         placement="bottom-end"
         hideOnClick={false}
+        disabled={!currenUser.phoneNumber}
       >
         <button
           className={cx("btn_user")}
