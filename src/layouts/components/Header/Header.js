@@ -1,19 +1,19 @@
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classnames from "classnames/bind";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoList from "~/assets/images/logo";
 import ModalSignin from "~/components/Modal/ModalSignin/ModalSignin";
+import { useSelector } from "react-redux";
 import Search from "../../../components/Search/Search";
 // import Search from "/Search";
 import styles from "./Header.module.scss";
 import Message from "./Message/Message";
-
+import Account from "./Account/Account";
 const cx = classnames.bind(styles);
 
 function Header() {
   const [openModel, setOpenModel] = useState(false);
+  const currenUser = useSelector((state) => state.user.current);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("content")}>
@@ -41,9 +41,8 @@ function Header() {
           {/* //icon và menu mesage // */}
           <Message />
           {/*  */}
-          <button className={cx("btn_user")} onClick={() => setOpenModel(true)}>
-            <FontAwesomeIcon icon={faUser} />
-          </button>
+          {/* Account */}
+          <Account currenUser={currenUser} setOpenModel={setOpenModel} />
         </div>
       </div>
       {/* modal */}

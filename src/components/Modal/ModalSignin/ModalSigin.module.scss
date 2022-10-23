@@ -7,13 +7,13 @@
 .modal-content {
   padding: 58px 16px 16px;
 }
-.modal-title {
-  font-weight: bold;
-  font-size: 20px;
-  text-align: center;
-  font-family: "Baloo 2";
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: var(--primary);
+  font-size: 1.6rem;
 }
-
 .modal-body {
   display: flex;
   flex-direction: column;

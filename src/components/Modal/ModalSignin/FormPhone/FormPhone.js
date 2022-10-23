@@ -17,11 +17,8 @@ function FormPhone({ setForm, setPhoneNumber }) {
       ),
   });
   const handleSubmit = (values) => {
-    //call api here
-    console.log(values);
     setForm(2);
     setPhoneNumber(values.sdt);
-    return;
   };
   return (
     <Formik
@@ -34,6 +31,7 @@ function FormPhone({ setForm, setPhoneNumber }) {
         // console.log(values, errors, touched);
         return (
           <Form>
+            <div className={cx("modal-title")}>Phúc long xin chào</div>
             <div className={cx("modal-sub-title")}>Đăng nhập</div>
             <FastField // thằng này ko render lại khi cả components re-render
               name="sdt"

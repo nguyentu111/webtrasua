@@ -22,7 +22,7 @@ InputField.defaultProps = {
 };
 
 function InputField(props) {
-  const { field, form, type, label, placeholder, disabled } = props;
+  const { field, form, type, label, placeholder, disabled, autoFocus } = props;
   const { name } = field;
   const { errors, touched } = form;
   const showError = Boolean(errors[name]); // có message lỗi và touched=true thì trả ra true
@@ -40,6 +40,7 @@ function InputField(props) {
         placeholder={placeholder}
         // invalid={showError}
         className={cx("input", { invalid: showError })}
+        autoFocus={autoFocus}
       />
 
       <span className={cx("error")}>{errors[name]}</span>

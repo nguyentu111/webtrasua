@@ -1,3 +1,9 @@
+.modal-title {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  font-family: "Baloo 2";
+}
 .modal-sub-title {
   margin-top: 5px;
   margin-bottom: 30px;
@@ -6,7 +12,7 @@
 }
 .btn-submit {
   width: 100%;
-  padding: 20px auto;
+  padding: 10px;
   line-height: 3rem;
   font-size: 1.4rem;
   background-color: var(--primary);
