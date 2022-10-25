@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import { TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { fontSize } from "@mui/system";
+import { ErrorMessage } from "formik";
 const cx = classNames.bind(styles);
 InputMuiFied.propTypes = {
   field: PropTypes.object.isRequired,
@@ -25,58 +26,51 @@ InputMuiFied.defaultProps = {
 };
 
 function InputMuiFied(props) {
-  const {
-    field,
-    form,
-    type,
-    label,
-    placeholder,
-    disabled,
-    autoFocus,
-    defaultValue,
-  } = props;
+  const { field, form, type, label, placeholder, disabled, autoFocus } = props;
   const { name } = field;
-  const { errors, touched } = form;
-  const showError = Boolean(errors[name]); // có message lỗi và touched=true thì trả ra true
-  // console.log('form: ', form);
-  console.log(showError);
-  // console.log('field: ', field);
+
+  const { errors, touched, setTouched, setFieldError } = form;
+  const showError = errors[name] && touched[name]; // có message lỗi và touched=true thì trả ra true
 
   return (
     <FormGroup>
-      {/* <input
-        id={name}
-        {...field} // field có 4 thuộc tính là name , value, onChange,onBlur
-        type={type}
-        disabled={disabled}
-        placeholder={placeholder}
-        // invalid={showError}
-        className={cx("input", { invalid: showError })}
-        autoFocus={autoFocus}
-      /> */}
-
       <TextField
         label={label}
         disabled={disabled}
         placeholder={placeholder}
         type={type}
-        error={showError}
         autoFocus={autoFocus}
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
+        sx={{
+          "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            border: showError ? "1px solid red" : "1px solid #333",
+          },
+          "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+            color: "var(--primary)",
+          },
+          "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: showError
+              ? "1px solid red"
+              : "2px solid var(--primary) !important",
+          },
+        }}
         InputLabelProps={{
           style: {
             fontSize: "1.4rem",
+            color: showError && "red",
           },
           shrink: true,
-          classes: cx("input_label"),
         }}
         fullWidth
         InputProps={{
-          style: { fontSize: "1.4rem" },
+          style: {
+            fontSize: "1.4rem",
+            borderColor: showError ? "red" : "#333",
+          },
+          ...field,
         }}
       />
-
-      <span className={cx("error")}>{errors[name]}</span>
+      {showError && <span className={cx("error")}>{errors[name]}</span>}
     </FormGroup>
   );
 }

@@ -4,8 +4,6 @@ import { FormGroup, Label } from "reactstrap";
 import styles from "./SelectMuiField.module.scss";
 import classNames from "classnames/bind";
 import { Autocomplete, TextField } from "@mui/material";
-import { fontSize } from "@mui/system";
-import InputMuiFied from "../InputMuiField/InputMuiField";
 const cx = classNames.bind(styles);
 SelectMuiField.propTypes = {
   field: PropTypes.object.isRequired,
@@ -34,59 +32,110 @@ function SelectMuiField(props) {
     disabled,
     options,
     readOnly,
+    id,
     value,
-    getOptionLabel,
+    nooptionstext,
   } = props;
   const { name } = field;
   const { errors, touched } = form;
-
-  const showError = Boolean(errors[name]); // có message lỗi và touched=true thì trả ra true
-
-  const [error, setError] = useState("");
+  const showError = errors[name] && touched[name]; // có message lỗi và touched=true thì trả ra true
+  const handleChangeAutoComplete = (e, newvalue) => {
+    form.setFieldValue(name, newvalue ? newvalue[id] : "");
+  };
+  const handleBlurTextField = (e) => {
+    form.setTouched({ ...form.touched, [name]: true });
+    const findingOption = options.find(
+      (option) => option[value] === e.target.value
+    );
+    const idOption = findingOption
+      ? findingOption[id]
+      : field.value === ""
+      ? ""
+      : field.value;
+    form.setFieldValue(name, idOption);
+  };
   return (
-    <FormGroup>
+    <>
       <Autocomplete
         disablePortal
         disabled={disabled}
-        readOnly={readOnly}
+        getOptionLabel={(option) => option[value]}
+        isOptionEqualToValue={(option, value) => option[id] === value[id]}
+        id="combo-box-demo"
         options={options}
         fullWidth
-        onChange={(e, newValue) => {}}
-        onClose={(e) => {}}
-        sx={{ width: " 100%" }}
-        value={value}
-        getOptionLabel={(option) => option[getOptionLabel]}
-        className={cx("autocomplete")}
+        readOnly={readOnly}
+        noOptionsText={nooptionstext}
+        onChange={handleChangeAutoComplete}
+        ListboxProps={{
+          sx: {
+            fontSize: "1.6rem",
+          },
+        }}
+        sx={{
+          "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+            border: showError ? "1px solid red !important" : "1px solid #333",
+          },
+          "& .css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator":
+            {
+              fontSize: "inherit",
+            },
+          "& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
+            fontSize: "inherit",
+          },
+          "& .css-i4bv87-MuiSvgIcon-root": {
+            //icon close
+            fontSize: "2.4rem",
+          },
+          "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
+            fontSize: "inherit",
+          },
+          "& .css-ptiqhd-MuiSvgIcon-root ": {
+            //icon clear
+            fontSize: "2.0rem",
+          },
+          "& .css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator":
+            {
+              marginRight: "1rem",
+            },
+        }}
         renderInput={(params) => (
           <TextField
+            {...field} //this is need to be put before onblur and onchange props
             {...params}
+            onBlur={handleBlurTextField}
+            onChange={() => {}} //ghi đè onchange của field
             label={label}
-            sx={{ fontSize: "1.4rem" }}
-            InputProps={{
-              style: {
-                "& *": {
-                  fontSize: "100% !important",
+            sx={{
+              "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                border: showError ? "1px solid red" : "1px solid #333",
+              },
+              "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":
+                {
+                  color: "var(--primary)",
                 },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: showError
+                  ? "1px solid red"
+                  : "2px solid var(--primary) !important",
               },
             }}
             InputLabelProps={{
-              style: {
-                // fontSize: "1.4rem",
-              },
               shrink: true,
+              style: {
+                fontSize: "1.4rem",
+                color: showError && "red",
+              },
             }}
-            onBlur={(e) => {}}
-            error={!!error}
-            // InputProps={{
-            //   style: { fontSize: "1.4rem" },
-            // }}
           />
-          // <InputMuiFied {...params} label={label} field={field} form={form} />
         )}
       />
-
-      <span className={cx("error")}>{error}</span>
-    </FormGroup>
+      {showError && <span className={cx("error")}>{errors[name]}</span>}
+      {/* <ErrorMessage
+        name={name}
+        render={(msg) => <span className={cx("error")}>{msg}</span>}
+      /> */}
+    </>
   );
 }
 

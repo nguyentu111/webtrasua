@@ -16,7 +16,7 @@ const login = async (q, type = "less") => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(q);
-    }, 3000);
+    }, 500);
   });
 };
 export default login;
