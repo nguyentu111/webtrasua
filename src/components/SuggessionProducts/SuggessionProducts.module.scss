@@ -3,15 +3,17 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
+  padding: 0 18px;
 }
 
 .title {
   margin-top: 20px;
-  font-family: "Baloo 2";
+  // font-family: "Baloo 2";
   color: var(--primary);
-  font-size: 3.4rem;
+  font-size: 34px;
   line-height: 5.5rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .sub_title {
@@ -20,7 +22,7 @@
   text-align: center;
   display: block;
   line-height: 29px;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 .goto_products {
   text-decoration: underline;

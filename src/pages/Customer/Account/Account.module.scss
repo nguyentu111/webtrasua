@@ -7,3 +7,14 @@
 .body {
   margin-top: 20px;
 }
+.btn-submit {
+  display: block;
+  margin-top: 16px;
+  margin-left: auto;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  // font-size: 1.3rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+}

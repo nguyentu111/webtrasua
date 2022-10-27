@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useMemo } from "react";
 import { FormGroup, Label } from "reactstrap";
 import styles from "./InputMuiFied.module.scss";
 import classNames from "classnames/bind";
 import { TextField } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { fontSize } from "@mui/system";
-import { ErrorMessage } from "formik";
+import { styled } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 InputMuiFied.propTypes = {
   field: PropTypes.object.isRequired,
@@ -24,6 +22,25 @@ InputMuiFied.defaultProps = {
   placeholder: "",
   disabled: false,
 };
+// const CssTextField = styled(TextField)({
+//   "& label.Mui-focused": {
+//     color: "var(--primary)",
+//   },
+//   "& .MuiInput-underline:after": {
+//     borderBottomColor: "yellow",
+//   },
+//   "& .MuiOutlinedInput-root": {
+//     "& fieldset": {
+//       border: "var(--cool-border)",
+//     },
+//     "&:hover fieldset": {
+//       borderColor: "var(--primary)",
+//     },
+//     "&.Mui-focused fieldset": {
+//       borderColor: "green",
+//     },
+//   },
+// });
 
 function InputMuiFied(props) {
   const { field, form, type, label, placeholder, disabled, autoFocus } = props;
@@ -40,10 +57,11 @@ function InputMuiFied(props) {
         placeholder={placeholder}
         type={type}
         autoFocus={autoFocus}
-        // defaultValue={defaultValue}
         sx={{
           "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            border: showError ? "1px solid red" : "1px solid #333",
+            border: showError
+              ? "1px solid red"
+              : "var(--cool-border) !important",
           },
           "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
             color: "var(--primary)",
@@ -53,10 +71,13 @@ function InputMuiFied(props) {
               ? "1px solid red"
               : "2px solid var(--primary) !important",
           },
+          "& .MuiOutlinedInput-root:hover fieldset": {
+            borderColor: !showError && "#333 !important",
+          },
         }}
         InputLabelProps={{
           style: {
-            fontSize: "1.4rem",
+            // fontSize: "1.4rem",
             color: showError && "red",
           },
           shrink: true,
@@ -64,7 +85,7 @@ function InputMuiFied(props) {
         fullWidth
         InputProps={{
           style: {
-            fontSize: "1.4rem",
+            // fontSize: "1.4rem",
             borderColor: showError ? "red" : "#333",
           },
           ...field,

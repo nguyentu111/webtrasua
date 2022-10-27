@@ -1,12 +1,12 @@
 import { FormGroup } from "@mui/material";
+import { unwrapResult } from "@reduxjs/toolkit";
 import classNames from "classnames/bind";
 import { FastField, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { loginUser } from "~/app/userSlice";
 import InputField from "~/components/custom-fields/InputField";
 import styles from "./FormPassWord.module.scss";
-import { useDispatch } from "react-redux";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { loginUser } from "~/app/userSlice";
 const cx = classNames.bind(styles);
 
 function FormPassWord({ setForm, phoneNumber, setOpenModel }) {

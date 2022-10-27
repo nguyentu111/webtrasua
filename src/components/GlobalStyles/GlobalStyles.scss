@@ -1,4 +1,6 @@
 @import "normalize.css";
+@import url("http://fonts.cdnfonts.com/css/baloo-2-2");
+
 :root {
   --primary: rgb(0, 111, 60);
   --default-layout-header-height: 72px;
@@ -6,11 +8,11 @@
   --text-color: #333;
   --white: #fff;
   --black: #000;
-  --font-family: sans-serif;
+  --font-family: "Baloo 2", sans-serif;
   --border-color: #bdc3c7;
   --search-boder-radius: 30px;
-  --search-icon-width: 40px;
-  --cool-border: 1px solid rgb(236, 239, 241);
+  --search-icon-width: 45px;
+  --cool-border: 1px solid rgb(217, 217, 217);
 }
 * {
   box-sizing: border-box;
@@ -18,11 +20,10 @@
   padding: 0;
 }
 html {
-  font-size: 62.5%;
+  // font-size: 62.5%;
 }
 body {
   font-family: var(--font-family);
-  font-size: 1.6rem;
   line-height: 1.5;
   color: var(--text-color);
   text-rendering: optimizeSpeed;
@@ -104,23 +105,27 @@ body {
 }
 // //font embedded
 // @font-face {
-//     font-family: ProximaNova;
-//     src: url('/assets/fonts/Proxima-Nova-Regular.woff2');
-//     font-weight: 400;
+//   font-family: Baloo2;
+//   src: url("/assets/fonts/Baloo2/Baloo2-Regular.ttf");
+//   font-weight: 400;
 // }
 // @font-face {
-//     font-family: ProximaNova;
-//     src: url('/assets/fonts/ProximaNova-Semibold.woff2');
-//     font-weight: 600;
+//   font-family: Baloo2;
+//   src: url("/assets/fonts/Baloo2/Baloo2-Medium.ttf");
+//   font-weight: 500;
 // }
 // @font-face {
-//     font-family: ProximaNova;
-//     src: url('/assets/fonts/Proxima-Nova-Bold.woff');
-//     font-weight: 700;
-
+//   font-family: Baloo2;
+//   src: url("/assets/fonts/Baloo2/baloo2_a.woff2");
+//   font-weight: 600;
 // }
 // @font-face {
-//     font-family: SofiaPro;
-//     src: url('/assets/fonts/sofiapro-bold.woff2');
-//     font-weight: 700;
+//   font-family: Baloo2;
+//   src: url("/assets/fonts/Baloo2/Baloo2-Bold.ttf");
+//   font-weight: 700;
+// }
+// @font-face {
+//   font-family: Baloo2;
+//   src: url("/assets/fonts/Baloo2/Baloo2-ExtraBold.ttf");
+//   font-weight: 800;
 // }

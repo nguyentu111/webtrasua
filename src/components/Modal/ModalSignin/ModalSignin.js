@@ -8,7 +8,7 @@ import FormForgetPass from "./FormForgetPass/FormForgetPass";
 import FormPassWord from "./FormPassWord/FormPassWord";
 import FormPhone from "./FormPhone/FormPhone";
 import styles from "./ModalSigin.module.scss";
-import { ArrowLeft } from "~/components/Icons/BodyIcon";
+import { ArrowLeft } from "~/assets/Icons/BodyIcon";
 const styleModal = {
   backgroundColor: "#fff",
   position: "absolute",
@@ -32,7 +32,8 @@ function ModalSignin({ openModel, setOpenModel }) {
   return (
     <Modal
       open={openModel}
-      onClose={() => {
+      onClose={(e, reason) => {
+        if (reason && reason === "backdropClick") return;
         setOpenModel(false);
         setForm(1);
       }}

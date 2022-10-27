@@ -14,16 +14,23 @@ const search = async (q, type = "less") => {
   //     console.error('Loi fetchAPI', err);
   // }
   return new Promise((resolve) => {
-    resolve([
-      {
-        data: {
-          id: 1,
-          image: images.trasua,
-          name: "Trà sữa phúc long",
-          price: "45.000đ",
-        },
-      },
-    ]);
+    setTimeout(
+      () =>
+        resolve(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9].map((v, i) => {
+            return {
+              data: {
+                id: i,
+                image: images.trasua,
+                name: "Trà sữa phúc long",
+                price: "45.000đ",
+              },
+            };
+          })
+        ),
+      1500
+    );
   });
 };
+
 export default search;

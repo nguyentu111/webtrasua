@@ -25,3 +25,9 @@
   color: var(--primary);
   margin-right: 10px;
 }
+@media (max-width: 740px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+}

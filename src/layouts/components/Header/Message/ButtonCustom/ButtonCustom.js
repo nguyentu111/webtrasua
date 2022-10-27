@@ -8,7 +8,7 @@ function ButtonCustom({ activeItem, onClick, children }) {
         width: "100%",
         borderRadius: "1px",
         color: activeItem === true ? "var(--primary)" : "#000",
-        fontSize: "1.4rem",
+        // fontSize: "1.4rem",
         height: "100%",
       }}
       onClick={activeItem ? () => {} : onClick}

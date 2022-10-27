@@ -12,11 +12,12 @@
   width: 52px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 .content {
   width: 633px;
   height: 100vh;
+  max-width: 100vw;
   .body {
     height: calc(100% - 175.6px - 58px);
     overflow-y: scroll;
@@ -53,11 +54,11 @@
 }
 
 .bag-icon {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   margin-right: 20px;
 }
 .title {
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: 550;
 }
 .check-out {
@@ -70,7 +71,7 @@
 
 .total-money {
   margin: 10px 2px;
-  font-size: 1.4rem;
+  font-size: 0.9rem;
   color: rgb(51, 51, 51);
   display: flex;
   justify-content: space-between;
@@ -89,7 +90,7 @@
 
 .price-strong {
   color: var(--primary);
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 .check-out-btn {

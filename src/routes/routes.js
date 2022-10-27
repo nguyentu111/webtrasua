@@ -15,12 +15,12 @@ const publicRoutes = [
     layout: SidebarLayout,
   },
   { path: config.routes.admin, component: AdminPage },
-  { path: config.routes.customer, component: Customer },
+
   {
     path: "/*",
     component: () => <Navigate to={"/"} />,
   },
 ];
-const privateRoutes = [];
+const privateRoutes = [{ path: config.routes.customer, component: Customer }];
 
 export { publicRoutes, privateRoutes };

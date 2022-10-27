@@ -9,6 +9,7 @@ import Search from "../../../components/Search/Search";
 import styles from "./Header.module.scss";
 import Message from "./Message/Message";
 import Account from "./Account/Account";
+import Logo from "./Logo/Logo";
 const cx = classnames.bind(styles);
 
 function Header() {
@@ -18,10 +19,9 @@ function Header() {
     <div className={cx("wrapper")}>
       <div className={cx("content")}>
         <div className={cx("content_left")}>
-          <Link to="/">
-            <img className={cx("logo")} src={logoList.logo1} alt="logo1" />
-          </Link>
-
+          {/* <Link to="/"> */}
+          <Logo />
+          {/* </Link> */}
           <Search />
         </div>
         <div className={cx("content_right")}>

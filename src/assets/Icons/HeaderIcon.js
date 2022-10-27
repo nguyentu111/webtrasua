@@ -17,8 +17,8 @@ export const Gmail = ({
 );
 
 export const SearchIcon = ({
-  width = "2.4rem",
-  height = "2.4rem",
+  width = "1rem",
+  height = "1rem",
   className,
   color,
 }) => (

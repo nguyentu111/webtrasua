@@ -1,12 +1,10 @@
 import { FormGroup } from "@mui/material";
 import classNames from "classnames/bind";
-import { FastField, Form, Formik } from "formik";
-import * as Yup from "yup";
-import InputField from "~/components/custom-fields/InputField";
-import styles from "./FormForgetPass.module.scss";
-import OtpInput from "react-otp-input";
+import { Form, Formik } from "formik";
 import { useState } from "react";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import OtpInput from "react-otp-input";
+import * as Yup from "yup";
+import styles from "./FormForgetPass.module.scss";
 const cx = classNames.bind(styles);
 
 function FormForgetPass({ setForm, phoneNumber }) {

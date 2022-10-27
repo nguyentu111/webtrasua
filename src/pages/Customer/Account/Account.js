@@ -1,17 +1,15 @@
-import { Link, Navigate, NavLink, Route, Routes } from "react-router-dom";
-import { listItems as accountMenu } from "~/constant/accountMenu";
+import { FormGroup, Grid, TextField } from "@mui/material";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import classNames from "classnames/bind";
-import styles from "./Account.module.scss";
-import routes from "~/config/routes";
-import { ArrowRight } from "~/components/Icons";
 import { FastField, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { FormGroup, Grid } from "@mui/material";
-import InputField from "~/components/custom-fields/InputField";
-import InputMuiField from "~/components/custom-fields/InputMuiField/InputMuiField";
 import { useSelector } from "react-redux";
+import * as Yup from "yup";
+import InputMuiField from "~/components/custom-fields/InputMuiField/InputMuiField";
 import SelectMuiField from "~/components/custom-fields/SelectMuiField/SelectMuiField";
-import SelectField from "~/components/custom-fields/SelectField";
+import styles from "./Account.module.scss";
+import React from "react";
+import DatePickerField from "~/components/custom-fields/DatePickerField/DatePickerField";
 const cx = classNames.bind(styles);
 const options = [
   { id: "1", value: "nam" },
@@ -23,6 +21,18 @@ const validationShema = Yup.object().shape({
     .matches(/^[A-Za-z ]*$/, "Họ tên chỉ bao gồm ký tự chữ và dấu cách")
     .required("Thông tin bắt buộc "),
   sex: Yup.string().required("Bạn chưa chọn giới tính "),
+  "identity-card-number": Yup.string().matches(
+    /^[0-9]+$/,
+    "Số CMND/CCCD chỉ bao gồm số"
+  ),
+  birthday: Yup.string().required("Thông tin bắt buộc"),
+  email: Yup.string()
+    .email("Email không đúng định dạng")
+    .required("Thông tin bắt buộc"),
+  province: Yup.string().required("Thông tin bắt buộc"),
+  district: Yup.string().required("Thông tin bắt buộc"),
+  commune: Yup.string().required("Thông tin bắt buộc"),
+  address: Yup.string().required("Thông tin bắt buộc"),
 });
 function Account() {
   const currentUser = useSelector((state) => state.user.current);
@@ -31,8 +41,17 @@ function Account() {
     fullname: "tu",
     phoneNumber: currentUser.phoneNumber,
     sex: "",
+    "identity-card-number": "",
+    birthday: "",
+    email: "",
+    province: "",
+    district: "",
+    commune: "",
+    address: "",
   };
-  const handleSubmit = () => {};
+  const handleSubmit = (value) => {
+    console.log(value);
+  };
   return (
     <div className={cx("wrapper")}>
       <div className={cx("title")}>Thông tin cá nhân</div>
@@ -43,9 +62,9 @@ function Account() {
           onSubmit={handleSubmit}
           validateOnBlur={true}
         >
-          {({ setFieldValue }) => {
+          {(props) => {
             //do somthing here
-
+            console.log(props);
             return (
               <>
                 <Form>
@@ -74,7 +93,6 @@ function Account() {
                         <Field
                           name="sex"
                           component={SelectMuiField}
-                          getOptionLabel="label"
                           id="id"
                           value="value"
                           initId=""
@@ -84,7 +102,91 @@ function Account() {
                         />
                       </FormGroup>
                     </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <Field
+                          name="identity-card-number"
+                          component={InputMuiField}
+                          label="Số CMND/CCCD"
+                        />
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <Field
+                            name="birthday"
+                            component={DatePickerField}
+                            label="Ngày sinh"
+                            inputFormat="DD/MM/YYYY"
+                          />
+                        </LocalizationProvider>
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <Field
+                          name="email"
+                          component={InputMuiField}
+                          label="Email"
+                        />
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <Field
+                          name="province"
+                          component={SelectMuiField}
+                          id="id"
+                          value="value"
+                          initId=""
+                          label="Tỉnh/Thành phố"
+                          options={options}
+                          nooptionstext="Không tìm thấy bản ghi nào!"
+                        />
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <Field
+                          name="district"
+                          component={SelectMuiField}
+                          id="id"
+                          value="value"
+                          initId=""
+                          label="Quận/Huyện"
+                          options={options}
+                          nooptionstext="Không tìm thấy bản ghi nào!"
+                        />
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <Field
+                          name="commune"
+                          component={SelectMuiField}
+                          id="id"
+                          value="value"
+                          initId=""
+                          label="Phường/Xã"
+                          options={options}
+                          nooptionstext="Không tìm thấy bản ghi nào!"
+                        />
+                      </FormGroup>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormGroup>
+                        <Field
+                          name="address"
+                          component={InputMuiField}
+                          label="Địa chỉ"
+                        />
+                      </FormGroup>
+                    </Grid>
                   </Grid>
+                  <button type="submit" className={cx("btn-submit")}>
+                    Lưu thay đổi
+                  </button>
                 </Form>
               </>
             );

@@ -1,6 +1,6 @@
 import Logout from "~/layouts/components/Logout/Logout";
 import Account from "~/pages/Customer/Account/Account";
-
+import AccountCustomer from "~/pages/Customer/AccountCustomer/AccountCustomer";
 const { default: images } = require("~/assets/images/accountMenu");
 export const listItems = [
   {
@@ -13,7 +13,7 @@ export const listItems = [
     image: images.userCard,
     title: "Khách hàng thành viên",
     link: `account-customer`,
-    element: <>Khách hàng thành viên</>,
+    element: <AccountCustomer />,
   },
   {
     image: images.map,

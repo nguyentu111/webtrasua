@@ -47,7 +47,7 @@ function ModalCoupon({ openModel, setOpenModel }) {
                   width: "100%",
                   backgroundColor: "var(--primary)",
                   fontWeight: "600",
-                  fontSize: "1.4rem",
+                  fontSize: "0.9rem",
                   marginBottom: "10px",
                   "&: hover": {
                     opacity: 0.9,

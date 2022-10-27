@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { Gmail } from "~/components/Icons";
+import { Gmail } from "~/assets/Icons";
 import styles from "./Message.module.scss";
 import classNames from "classnames/bind";
 import ButtonCustom from "./ButtonCustom/ButtonCustom";
@@ -57,7 +57,7 @@ function Message() {
         placement="bottom-end"
       >
         <span className={cx("icon")}>
-          <Gmail width="2.3rem" className={cx("mail_icon_svg")} />
+          <Gmail width="1.4rem" className={cx("mail_icon_svg")} />
         </span>
       </Tippy>
     </div>

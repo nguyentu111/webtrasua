@@ -3,7 +3,7 @@ import { listItems as accountMenu } from "~/constant/accountMenu";
 import classNames from "classnames/bind";
 import styles from "./Customer.module.scss";
 import routes from "~/config/routes";
-import { ArrowRight } from "~/components/Icons";
+import { ArrowRight } from "~/assets/Icons";
 const cx = classNames.bind(styles);
 
 function Customer() {
@@ -31,8 +31,8 @@ function Customer() {
                     <span className={cx("icon")}>
                       <ArrowRight
                         color="rgb(217, 217, 217)"
-                        width="1.8rem"
-                        height="1.8rem"
+                        width="1.2rem"
+                        height="1.2rem"
                       />
                     </span>
                   </div>
@@ -43,7 +43,7 @@ function Customer() {
         </div>
         <div className={cx("content")}>
           <Routes>
-            <Route index element={<Navigate to="account" />} />
+            <Route index element={<Navigate to={accountMenu[0].link} />} />
             {accountMenu.map((item, index) => {
               return (
                 <Route

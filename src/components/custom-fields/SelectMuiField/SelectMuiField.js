@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FormGroup, Label } from "reactstrap";
 import styles from "./SelectMuiField.module.scss";
 import classNames from "classnames/bind";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, styled, TextField } from "@mui/material";
 const cx = classNames.bind(styles);
 SelectMuiField.propTypes = {
   field: PropTypes.object.isRequired,
@@ -23,7 +23,6 @@ SelectMuiField.defaultProps = {
   placeholder: "",
   disabled: false,
 };
-
 function SelectMuiField(props) {
   const {
     field,
@@ -69,35 +68,41 @@ function SelectMuiField(props) {
         onChange={handleChangeAutoComplete}
         ListboxProps={{
           sx: {
-            fontSize: "1.6rem",
+            // fontSize: "1.6rem",
           },
         }}
         sx={{
           "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-            border: showError ? "1px solid red !important" : "1px solid #333",
+            // height: "58px",
+            border: showError
+              ? "1px solid red !important"
+              : "var(--cool-border) !important",
           },
           "& .css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator":
             {
-              fontSize: "inherit",
+              // fontSize: "inherit",
             },
           "& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
-            fontSize: "inherit",
+            // fontSize: "inherit",
           },
           "& .css-i4bv87-MuiSvgIcon-root": {
             //icon close
-            fontSize: "2.4rem",
+            // fontSize: "2.4rem",
           },
           "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
-            fontSize: "inherit",
+            // fontSize: "inherit",
           },
           "& .css-ptiqhd-MuiSvgIcon-root ": {
             //icon clear
-            fontSize: "2.0rem",
+            // fontSize: "2.0rem",
           },
           "& .css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator":
             {
               marginRight: "1rem",
             },
+          "& .MuiOutlinedInput-root:hover fieldset": {
+            borderColor: !showError && "#333 !important",
+          },
         }}
         renderInput={(params) => (
           <TextField
@@ -114,6 +119,10 @@ function SelectMuiField(props) {
                 {
                   color: "var(--primary)",
                 },
+              "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-hovered":
+                {
+                  color: "var(--primary) !important",
+                },
               "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
                 border: showError
                   ? "1px solid red"
@@ -123,7 +132,7 @@ function SelectMuiField(props) {
             InputLabelProps={{
               shrink: true,
               style: {
-                fontSize: "1.4rem",
+                // fontSize: "1.4rem",
                 color: showError && "red",
               },
             }}

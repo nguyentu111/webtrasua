@@ -24,15 +24,19 @@ function SuggessionProducts() {
   }, []);
   return (
     <div className={cx("wrapper")}>
-      <span className={cx("title")}>Sản phẩm nổi bật</span>
+      <span className={cx("title")}>Sản Phẩm Nổi Bật</span>
       <span className={cx("sub_title")}>
         Trải qua hơn 50 năm chắt chiu tinh hoa từ những búp trà xanh và hạt cà
         phê thượng hạng cùng mong muốn mang lại cho khách hàng những trải nghiệm
         giá trị nhất khi thưởng thức.
       </span>
-      <Grid container justifyContent="space-between">
+      <Grid spacing={2} container justifyContent="space-around" columns={10}>
         {suggesBavarage.map((v, i) => {
-          return <ProductCard data={v} key={v.id} />;
+          return (
+            <Grid item xs={10} md={2} sm={5} key={i}>
+              <ProductCard data={v} key={v.id} />
+            </Grid>
+          );
         })}
       </Grid>
       <Link to={`${routes.products}/${categories[0].link}`}>

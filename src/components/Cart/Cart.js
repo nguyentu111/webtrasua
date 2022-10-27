@@ -5,25 +5,36 @@ import {
   faClose,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Drawer } from "@mui/material";
+import { ClickAwayListener, Drawer } from "@mui/material";
 import classNames from "classnames/bind";
 import React, { useState } from "react";
 import CartItem from "../CartItem/CartItem";
 import ModalCoupon from "../Modal/ModalCoupon/ModalCoupon";
 import styles from "./Cart.module.scss";
+import { ArrowRight } from "~/assets/Icons";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 const cx = classNames.bind(styles);
 function Cart() {
   const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalCoupon, setOpenModalCoupon] = useState(false);
   const anchor = "right";
-
+  const handleClickAway = () => {
+    setOpen(false);
+    // console.log("aa");
+  };
   return (
     <>
       <div className={cx("wrapper")}>
         <button onClick={() => setOpen(true)} className={cx("btn-cart")}>
-          <FontAwesomeIcon icon={faCartPlus} />
+          {/* <FontAwesomeIcon icon={faCartPlus} /> */}
+          <AddShoppingCartIcon />
         </button>
-        <Drawer anchor={anchor} open={open} onClose={() => setOpen(true)}>
+        <Drawer
+          anchor={anchor}
+          open={open}
+          onClose={() => setOpen(false)}
+          ModalProps={{ hideBackdrop: true }}
+        >
           <div className={cx("content")}>
             <div className={cx("header")}>
               <span className={cx("bag-icon")}>
@@ -47,9 +58,10 @@ function Cart() {
                 </div>
                 <div className={cx("total-money")}>
                   <span className={cx("label")}>Mã giảm giá</span>
-                  <button onClick={() => setOpenModal(true)}>
+                  <button onClick={() => setOpenModalCoupon(true)}>
                     <span className={cx("icon")}>
-                      <FontAwesomeIcon icon={faArrowRight} />
+                      {/* <FontAwesomeIcon icon={faArrowRight} /> */}
+                      <ArrowRight width="1.2rem" height="1.2rem" />
                     </span>
                   </button>
                 </div>
@@ -61,6 +73,7 @@ function Cart() {
               <button className={cx("check-out-btn")}>THANH TOÁN</button>
             </div>
           </div>
+
           <button
             className={cx("close")}
             onClick={() => {
@@ -71,7 +84,10 @@ function Cart() {
           </button>
         </Drawer>
       </div>
-      <ModalCoupon openModel={openModal} setOpenModel={setOpenModal} />
+      <ModalCoupon
+        openModel={openModalCoupon}
+        setOpenModel={setOpenModalCoupon}
+      />
     </>
   );
 }
