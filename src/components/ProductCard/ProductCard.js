@@ -16,7 +16,6 @@ function ProductCard({ data }) {
     e.preventDefault();
     setOpenModel(true);
   };
-  console.log(data.id);
   return (
     <Link to={`/products/${data.id}`}>
       <Grid item>

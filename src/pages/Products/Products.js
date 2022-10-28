@@ -5,7 +5,7 @@ import CategoryDes from "~/components/CategoryDes/CategoryDes";
 import Subcategory from "~/components/SubCategory/Subcategory";
 import Cart from "~/components/Cart/Cart";
 const cx = classNames.bind(styles);
-function Product() {
+function Products() {
   return (
     <div className={cx("wrapper")}>
       <Subcategory />
@@ -17,4 +17,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Products;
