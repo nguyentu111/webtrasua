@@ -16,6 +16,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px;
+  border-radius: 12px;
+  background: rgb(255, 255, 255);
 }
 .btn_back {
   top: 20px;
@@ -53,4 +56,18 @@
   margin-top: 20px;
   border-bottom: var(--cool-border);
   width: 100%;
+}
+.form {
+  margin-top: 24px;
+  width: 100%;
+}
+.submit_btn {
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 10px 30px;
+  margin: auto;
+  margin-top: 24px;
+  display: block;
+  font-weight: 600;
 }

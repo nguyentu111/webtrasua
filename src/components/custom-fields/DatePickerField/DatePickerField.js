@@ -25,7 +25,7 @@ function DatePickerField(props) {
   const { name, value } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
-  console.log(showError);
+  // console.log(showError);
   const [valueDate, setValue] = React.useState(convert2(value));
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -34,7 +34,7 @@ function DatePickerField(props) {
         inputFormat={inputFormat}
         value={valueDate}
         onClose={() => {
-          console.log(form);
+          // console.log(form);
         }}
         onChange={(newValue) => {
           setValue(newValue);

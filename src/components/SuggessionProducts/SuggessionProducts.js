@@ -39,9 +39,11 @@ function SuggessionProducts() {
           );
         })}
       </Grid>
-      <Link to={`${routes.products}/${categories[0].link}`}>
-        <span className={cx("goto_products")}>Xem thêm</span>
-      </Link>
+      <div style={{ marginTop: "20px" }}>
+        <Link to={`${routes.products}/${categories[0].link}`}>
+          <span className={cx("goto_products")}>Xem thêm</span>
+        </Link>
+      </div>
     </div>
   );
 }

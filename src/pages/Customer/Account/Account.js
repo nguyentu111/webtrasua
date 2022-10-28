@@ -50,7 +50,7 @@ function Account() {
     address: "",
   };
   const handleSubmit = (value) => {
-    console.log(value);
+    // console.log(value);
   };
   return (
     <div className={cx("wrapper")}>
@@ -64,7 +64,7 @@ function Account() {
         >
           {(props) => {
             //do somthing here
-            console.log(props);
+            // console.log(props);
             return (
               <>
                 <Form>

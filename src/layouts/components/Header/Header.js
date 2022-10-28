@@ -19,9 +19,9 @@ function Header() {
     <div className={cx("wrapper")}>
       <div className={cx("content")}>
         <div className={cx("content_left")}>
-          {/* <Link to="/"> */}
-          <Logo />
-          {/* </Link> */}
+          <Link to="/" style={{ display: "block", height: "100%" }}>
+            <Logo />
+          </Link>
           <Search />
         </div>
         <div className={cx("content_right")}>

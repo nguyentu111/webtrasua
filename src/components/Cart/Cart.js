@@ -18,22 +18,27 @@ function Cart() {
   const [open, setOpen] = useState(false);
   const [openModalCoupon, setOpenModalCoupon] = useState(false);
   const anchor = "right";
-  const handleClickAway = () => {
-    setOpen(false);
-    // console.log("aa");
-  };
+
   return (
-    <>
-      <div className={cx("wrapper")}>
-        <button onClick={() => setOpen(true)} className={cx("btn-cart")}>
-          {/* <FontAwesomeIcon icon={faCartPlus} /> */}
-          <AddShoppingCartIcon />
-        </button>
-        <Drawer
-          anchor={anchor}
-          open={open}
-          onClose={() => setOpen(false)}
-          ModalProps={{ hideBackdrop: true }}
+    <div className={cx("wrapper")}>
+      <button
+        onClick={() => setOpen(true)}
+        className={cx("btn-cart")}
+        data-count={3}
+      >
+        <AddShoppingCartIcon />
+      </button>
+
+      <Drawer
+        anchor={anchor}
+        open={open}
+        onClose={() => setOpen(false)}
+        ModalProps={{ hideBackdrop: true }}
+      >
+        <ClickAwayListener
+          onClickAway={() => {
+            setOpen(false);
+          }}
         >
           <div className={cx("content")}>
             <div className={cx("header")}>
@@ -72,23 +77,23 @@ function Cart() {
               </div>
               <button className={cx("check-out-btn")}>THANH TOÁN</button>
             </div>
+            <ModalCoupon
+              openModel={openModalCoupon}
+              setOpenModel={setOpenModalCoupon}
+            />
           </div>
+        </ClickAwayListener>
 
-          <button
-            className={cx("close")}
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            <FontAwesomeIcon icon={faClose} />
-          </button>
-        </Drawer>
-      </div>
-      <ModalCoupon
-        openModel={openModalCoupon}
-        setOpenModel={setOpenModalCoupon}
-      />
-    </>
+        <button
+          className={cx("close")}
+          onClick={() => {
+            setOpen(false);
+          }}
+        >
+          <FontAwesomeIcon icon={faClose} />
+        </button>
+      </Drawer>
+    </div>
   );
 }
 

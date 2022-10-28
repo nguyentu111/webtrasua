@@ -14,7 +14,7 @@ function FormForgetPass({ setForm, phoneNumber }) {
   });
   const handleSubmit = (values) => {
     //call api here
-    console.log(phoneNumber, values.password);
+    // console.log(phoneNumber, values.password);
 
     return;
   };
@@ -59,7 +59,7 @@ function FormForgetPass({ setForm, phoneNumber }) {
                   type="submit"
                   className={cx("btn-submit")}
                   onClick={() => {
-                    console.log(otp);
+                    // console.log(otp);
                   }}
                 >
                   XÁC NHẬN

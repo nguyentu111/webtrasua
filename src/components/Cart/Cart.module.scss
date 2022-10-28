@@ -13,6 +13,21 @@
   border-radius: 50%;
   cursor: pointer;
   font-size: 1rem;
+  // position: relative;
+  &::after {
+    content: attr(data-count);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 0.8rem;
+    // width: 20px;
+    // height: 20px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: red;
+    border: 1px solid #333;
+  }
 }
 .content {
   width: 633px;

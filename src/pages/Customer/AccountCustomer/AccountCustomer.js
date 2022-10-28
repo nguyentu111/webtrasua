@@ -6,9 +6,8 @@ import { Avatar, FormGroup } from "@mui/material";
 import { useSelector } from "react-redux";
 import logoList from "~/assets/images/logo";
 import { ArrowLeft } from "~/assets/Icons";
-import { FastField, Formik } from "formik";
+import { FastField, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Form } from "react-router-dom";
 import InputField from "~/components/custom-fields/InputField";
 const cx = classNames.bind(styles);
 const validationShema = Yup.object().shape({
@@ -19,17 +18,17 @@ const initialValues = {
 };
 function AccountCustomer() {
   const currentUser = useSelector((state) => state.user.current);
-  const [singUpping, setSingUpping] = useState(false);
+  const [singingUp, setSingingUp] = useState(false);
 
-  console.log(singUpping);
+  // console.log(singingUp);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("content")}>
-        {singUpping && (
+        {singingUp && (
           <button
             className={cx("btn_back")}
             onClick={() => {
-              setSingUpping(false);
+              setSingingUp(false);
             }}
           >
             <ArrowLeft width="1.8rem" height="1.8rem" color="var(--primary)" />
@@ -51,11 +50,11 @@ function AccountCustomer() {
         <span className={cx("phone_number")}>{currentUser.phoneNumber}</span>
 
         <div className={cx("separater")}></div>
-        {!singUpping && (
+        {!singingUp && (
           <>
             <button
               className={cx("sign_up")}
-              onClick={() => setSingUpping(true)}
+              onClick={() => setSingingUp(true)}
             >
               Đăng kí thành viên
             </button>
@@ -66,27 +65,27 @@ function AccountCustomer() {
             </span>
           </>
         )}
-        {singUpping && (
-          <div>
-            <div>aaaaaaaaaaa</div>
+        {singingUp && (
+          <div className={cx("form")}>
             <Formik
               initialValues={initialValues}
               onSubmit={() => {}}
               validationSchema={validationShema}
             >
               {(props) => {
-                console.log(singUpping);
+                // console.log(singingUp);
                 return (
                   <Form>
                     <FormGroup>
                       <FastField
                         name="recieptNumber"
                         component={InputField}
-                        label="Họ & tên"
                         placeholder="Nhập vào số hóa đơn xét điều kiện"
                       />
                     </FormGroup>
-                    <button type="submit">Kiểm tra</button>
+                    <button className={cx("submit_btn")} type="submit">
+                      KIỂM TRA
+                    </button>
                   </Form>
                 );
               }}

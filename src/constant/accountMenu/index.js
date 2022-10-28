@@ -1,6 +1,9 @@
 import Logout from "~/layouts/components/Logout/Logout";
 import Account from "~/pages/Customer/Account/Account";
 import AccountCustomer from "~/pages/Customer/AccountCustomer/AccountCustomer";
+import AddressBook from "~/pages/Customer/AddressBook/AddressBook";
+import Order from "~/pages/Customer/Order/Order";
+import ProductFavorite from "~/pages/Customer/ProductFavorite/ProductFavorite";
 const { default: images } = require("~/assets/images/accountMenu");
 export const listItems = [
   {
@@ -19,19 +22,19 @@ export const listItems = [
     image: images.map,
     title: "Sổ địa chỉ",
     link: `address-book`,
-    element: <>Sổ địa chỉ</>,
+    element: <AddressBook />,
   },
   {
     image: images.cart,
     title: "Đơn hàng",
     link: `order`,
-    element: <>Đơn hàng</>,
+    element: <Order />,
   },
   {
     image: images.heart,
     title: "Sản phẩm yêu thích",
     link: `product-favorite`,
-    element: <>Sản phẩm yêu thích</>,
+    element: <ProductFavorite />,
   },
   {
     image: images.store,

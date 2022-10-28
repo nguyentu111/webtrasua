@@ -43,7 +43,7 @@ function ModalSignin({ openModel, setOpenModel }) {
       <Box style={styleModal} alignItems="center">
         {form !== 1 && (
           <button className={cx("back-btn")} onClick={handleBack}>
-            <ArrowLeft />
+            <ArrowLeft width="25px" height="25px" />
           </button>
         )}
         <div className={cx("modal-logo")}>

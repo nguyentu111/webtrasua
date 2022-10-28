@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import BookBavarage from "../Modal/BookBavarage/BookBavarage";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 const cx = classNames.bind(styles);
 
 function ProductCard({ data }) {
@@ -14,12 +16,16 @@ function ProductCard({ data }) {
     e.preventDefault();
     setOpenModel(true);
   };
+  console.log(data.id);
   return (
-    <>
+    <Link to={`/products/${data.id}`}>
       <Grid item>
         <div className={cx("wrapper")}>
           <div className={cx("image-wrapper")}>
             <img src={data.image} alt="" className={cx("image")} />
+            <button className={cx("heart_icon")}>
+              <FavoriteIcon />
+            </button>
           </div>
           <div className={cx("content")}>
             <span className={cx("name")}>{data.name}</span>
@@ -33,7 +39,7 @@ function ProductCard({ data }) {
       </Grid>
 
       <BookBavarage openModel={openModel} setOpenModel={setOpenModel} />
-    </>
+    </Link>
   );
 }
 

@@ -6,7 +6,6 @@
   &:hover {
     box-shadow: rgb(153 153 153 / 60%) 0px 0px 10px 0px;
   }
-  margin-bottom: 20px;
 }
 .image-wrapper {
   width: 100%;
@@ -20,7 +19,7 @@
 
   overflow: hidden;
   min-height: 140px;
-  height: 250px;
+  height: 252px;
 
   border-radius: 8px;
   background-color: rgb(236, 239, 241);
@@ -31,12 +30,20 @@
     max-height: 140px;
     height: auto;
   }
+  .heart_icon {
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 9px;
+    color: var(--primary);
+  }
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 0 16px 16px;
   color: var(--primary);
 }
 
@@ -44,6 +51,7 @@
   font-size: 1rem;
   font-weight: 600;
   margin-top: 16px;
+  line-height: 21px;
 }
 
 .price {

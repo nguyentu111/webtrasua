@@ -9,7 +9,7 @@ function Sidebar() {
   let { category } = useParams();
   return (
     <div className={cx("wrapper")}>
-      <Grid container columns={10} justifyContent="space-around">
+      <Grid container columns={10}>
         {categories.map((v, i) => {
           return (
             <Grid alignItems="flex-start" item md={5} key={i}>

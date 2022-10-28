@@ -24,11 +24,12 @@ function Account({ setOpenModel }) {
       <Tippy
         interactive={true}
         render={renderTippy}
-        delay={[0, 200]}
+        delay={[200, 200]}
         animation={false}
         placement="bottom-end"
         hideOnClick={false}
         disabled={!currenUser.phoneNumber}
+        trigger="mouseenter" //fix auto show after disabled is false
       >
         <button
           className={cx("btn_user")}

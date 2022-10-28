@@ -21,10 +21,10 @@ function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
         loginUser({ phoneNumber, password: values.password })
       );
       const loggedUser = unwrapResult(actionResult);
-      console.log({ loggedUser });
+      // console.log({ loggedUser });
       setOpenModel(false);
     } catch (e) {
-      console.log("dang nhap that bai !! ", e);
+      // console.log("dang nhap that bai !! ", e);
     }
     return;
   };

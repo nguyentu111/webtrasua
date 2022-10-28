@@ -5,10 +5,13 @@
   width: 100%;
   border-radius: 5px;
   font-size: 0.9rem;
+  &:focus {
+    border: 2px solid var(--primary);
+  }
 }
 .invalid {
   margin-bottom: 0px;
-  border-color: red;
+  border-color: red !important;
 }
 .error {
   color: red;
