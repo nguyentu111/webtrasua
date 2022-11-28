@@ -24,11 +24,12 @@ function Search() {
       return;
     }
     setLoading(true);
-
+    const abortController = new AbortController();
+    const { signal } = abortController;
     const fetchAPI = async () => {
       setLoading(true);
       setSearchResult([]);
-      const result = await searchServices(debounced);
+      const result = await searchServices(debounced, signal);
 
       setSearchResult(result);
       setLoading(false);

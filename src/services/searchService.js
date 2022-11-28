@@ -1,6 +1,6 @@
 // import * as request from "~/utils/request";
 import images from "~/assets/images/bavarage";
-const search = async (q, type = "less") => {
+const search = async (q, signal) => {
   //fetch api here
   // try {
   //     const res = request.get('bavarage/search', {
@@ -8,6 +8,7 @@ const search = async (q, type = "less") => {
   //             q,
   //             type,
   //         },
+  //          signal:signal
   //     });
   //     return res;
   // } catch (err) {
