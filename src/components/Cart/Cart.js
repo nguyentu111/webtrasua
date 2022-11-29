@@ -20,14 +20,18 @@ function Cart() {
   const [open, setOpen] = useState(false);
   const [openModalCoupon, setOpenModalCoupon] = useState(false);
   const anchor = "right";
-  
+
   const items = useCart()
+  const sum = items.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.qty,
+    0,
+  );
   return (
     <div className={cx("wrapper")}>
       <button
         onClick={() => setOpen(true)}
         className={cx("btn-cart")}
-        data-count={items.length}
+        data-count={sum}
       >
         <AddShoppingCartIcon />
       </button>
