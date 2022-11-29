@@ -8,7 +8,7 @@ import GlobalStyles from "./components/GlobalStyles";
 import ScrollToTop from "./layouts/components/ScrollToTop/ScrollToTop";
 import { Provider } from "react-redux";
 import store from "./app/store";
-
+import { CartProvider } from './context/cartContext.js'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -16,7 +16,9 @@ root.render(
       <GlobalStyles>
         <ScrollToTop />
         <Provider store={store}>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </Provider>
       </GlobalStyles>
     </BrowserRouter>

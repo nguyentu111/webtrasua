@@ -13,18 +13,21 @@ import ModalCoupon from "../Modal/ModalCoupon/ModalCoupon";
 import styles from "./Cart.module.scss";
 import { ArrowRight } from "~/assets/Icons";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+
+import { useCart } from "~/context/cartContext";
 const cx = classNames.bind(styles);
 function Cart() {
   const [open, setOpen] = useState(false);
   const [openModalCoupon, setOpenModalCoupon] = useState(false);
   const anchor = "right";
-
+  
+  const items = useCart()
   return (
     <div className={cx("wrapper")}>
       <button
         onClick={() => setOpen(true)}
         className={cx("btn-cart")}
-        data-count={3}
+        data-count={items.length}
       >
         <AddShoppingCartIcon />
       </button>

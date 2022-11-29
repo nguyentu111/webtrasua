@@ -19,7 +19,11 @@ const styleModal = {
 const cx = classNames.bind(styles);
 
 function BookBavarage({ openModel, setOpenModel }) {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [item, setItem] = useState({})
+  const addToCart = () => {
+    
+  }
   return (
     <Modal
       open={openModel}
@@ -108,7 +112,7 @@ function BookBavarage({ openModel, setOpenModel }) {
               </div>
             </div>
           </div>
-          <button className={cx("add-to-cart")}>
+          <button className={cx("add-to-cart")} onClick='addToCart()'>
             <FontAwesomeIcon icon={faCartPlus} />
             <span style={{ marginLeft: "10px" }}>
               Thêm vào giỏ hàng : 55.000 &nbsp;đ
