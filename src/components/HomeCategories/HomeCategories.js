@@ -9,11 +9,10 @@ function Homecategories() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("content")}>
-        <Grid container spacing={2} columns={10}>
+        <Grid container spacing={2} columns={12}>
           {categories.map((v, i) => {
             return (
-              <Grid xs={10} md={2} sm={5} item>
-                {" "}
+              <Grid xs={12} md={4} sm={4} item>
                 <CategoryItem data={v} key={i} />
               </Grid>
             );

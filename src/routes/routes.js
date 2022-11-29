@@ -11,7 +11,7 @@ import Products from "~/pages/Products/Products";
 const publicRoutes = [
   { path: config.routes.home, component: Home, layout: DefaultLayout },
   {
-    path: config.routes.productChild,
+    path: config.routes.products,
     component: Products,
     layout: SidebarLayout,
   },

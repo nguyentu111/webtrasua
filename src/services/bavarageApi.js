@@ -51,7 +51,18 @@ const getSugges = async (q, type = "less") => {
   });
 };
 
+const getDrinkByType = async () => {
+  // fetch api here
+  try {
+    const res = request.get("drinks", {});
+    return res;
+  } catch (err) {
+    console.error("Loi fetchAPI", err);
+  }
+};
 const bavarageApi = {
   getSugges,
+  getDrinkByType,
 };
+
 export default bavarageApi;

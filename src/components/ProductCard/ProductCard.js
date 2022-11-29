@@ -16,19 +16,20 @@ function ProductCard({ data }) {
     e.preventDefault();
     setOpenModel(true);
   };
+  const { name, price, imageSource, id } = data;
   return (
-    <Link to={`/products/${data.id}`}>
+    <Link to={`/products/${id}`}>
       <Grid item>
         <div className={cx("wrapper")}>
           <div className={cx("image-wrapper")}>
-            <img src={data.image} alt="" className={cx("image")} />
+            <img src={imageSource} alt="" className={cx("image")} />
             <button className={cx("heart_icon")}>
               <FavoriteIcon />
             </button>
           </div>
           <div className={cx("content")}>
-            <span className={cx("name")}>{data.name}</span>
-            <span className={cx("price")}>{data.price}&nbsp;đ</span>
+            <span className={cx("name")}>{name}</span>
+            <span className={cx("price")}>{price}&nbsp;đ</span>
             <button className={cx("button")} onClick={handleClickBtn}>
               <FontAwesomeIcon icon={faCartPlus} />
               <span style={{ marginLeft: "10px" }}>Đặt mua</span>
