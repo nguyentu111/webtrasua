@@ -1,28 +1,36 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchIcon } from "~/assets/Icons";
 import { useDebounce } from "~/hooks";
 import styles from "./Order.module.scss";
 import { default as searchServices } from "~/services/searchService";
 import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { ConnectingAirportsOutlined } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 function Order() {
   const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef();
-  const firstBtn = useRef();
   const debounced = useDebounce(searchValue, 500);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showResult, setShowResult] = useState(true);
-  const [choosingTab, setChoosingTab] = useState({
-    id: 1,
-    offsetLeft: 0,
-    offsetWidth: 0,
+  //////
+  let firstBtn = useRef();
+  const [choosingBtn, setChoosingBtn] = useState({
+    // target: firstBtn.current,
+    // id: 1,
   });
 
+  const handleClear = () => {
+    setSearchValue("");
+    setSearchResult([]);
+    inputRef.current.focus();
+  };
+  const handleChange = (e) => {
+    const searchValue = e.target.value;
+    if (searchValue.startsWith(" ")) return;
+    setSearchValue(searchValue);
+  };
   useEffect(() => {
     if (!debounced.trim()) {
       setSearchResult([]);
@@ -41,39 +49,9 @@ function Order() {
     fetchAPI();
   }, [debounced]);
   //////
-  const handleClear = () => {
-    setSearchValue("");
-    setSearchResult([]);
-    inputRef.current.focus();
-  };
-  const handleChange = (e) => {
-    const searchValue = e.target.value;
-    if (searchValue.startsWith(" ")) return;
-    setSearchValue(searchValue);
-  };
-  const handleChangeTab = (e, id) => {
-    const ref = getComputedStyle(e.target);
-    setChoosingTab({
-      id: id,
-      offsetLeft: e.target.offsetLeft,
-      offsetWidth:
-        ref.paddingRight === "0px"
-          ? e.target.offsetWidth + 20
-          : e.target.offsetWidth,
-    });
-  };
-  useLayoutEffect(() => {
-    const ref = firstBtn.current;
-    const styleRef = getComputedStyle(ref);
-    if (choosingTab.id === 1) {
-      setChoosingTab({
-        id: 1,
-        offsetLeft: ref.offsetLeft,
-        offsetWidth:
-          styleRef.paddingRight === "0px"
-            ? ref.offsetWidth + 20
-            : ref.offsetWidth,
-      });
+  useEffect(() => {
+    if (!choosingBtn.target && firstBtn.current) {
+      setChoosingBtn({ target: firstBtn.current, id: 1 });
     }
   }, []);
   return (
@@ -113,45 +91,50 @@ function Order() {
       <div className={cx("menu")}>
         <button
           ref={firstBtn}
-          data-id={1}
-          onClick={(e) => handleChangeTab(e, 1)}
+          onClick={(e) => setChoosingBtn({ target: e.target, id: 1 })}
         >
-          <div className={cx("menu_item", { active: choosingTab.id === 1 })}>
+          <div
+            className={cx("menu_item", {
+              active: choosingBtn.id === 1,
+            })}
+          >
             CHỜ THANH TOÁN
           </div>
         </button>
-        <button data-id={2} onClick={(e) => handleChangeTab(e, 2)}>
-          <div className={cx("menu_item", { active: choosingTab.id === 2 })}>
+        <button onClick={(e) => setChoosingBtn({ target: e.target, id: 2 })}>
+          <div className={cx("menu_item", { active: choosingBtn.id === 2 })}>
             ĐƠN HÀNG MỚI
           </div>
         </button>
-        <button data-id={3} onClick={(e) => handleChangeTab(e, 3)}>
-          <div className={cx("menu_item", { active: choosingTab.id === 3 })}>
+        <button onClick={(e) => setChoosingBtn({ target: e.target, id: 3 })}>
+          <div className={cx("menu_item", { active: choosingBtn.id === 3 })}>
             ĐANG XỬ LÍ
           </div>
         </button>
-        <button data-id={4} onClick={(e) => handleChangeTab(e, 4)}>
-          <div className={cx("menu_item", { active: choosingTab.id === 4 })}>
+        <button onClick={(e) => setChoosingBtn({ target: e.target, id: 4 })}>
+          <div className={cx("menu_item", { active: choosingBtn.id === 4 })}>
             ĐANG GIAO
           </div>
         </button>
-        <button data-id={5} onClick={(e) => handleChangeTab(e, 5)}>
-          <div className={cx("menu_item", { active: choosingTab.id === 5 })}>
+        <button onClick={(e) => setChoosingBtn({ target: e.target, id: 5 })}>
+          <div className={cx("menu_item", { active: choosingBtn.id === 5 })}>
             HOÀN THÀNH
           </div>
         </button>
-        <button data-id={6} onClick={(e) => handleChangeTab(e, 6)}>
-          <div className={cx("menu_item", { active: choosingTab.id === 6 })}>
+        <button onClick={(e) => setChoosingBtn({ target: e.target, id: 6 })}>
+          <div className={cx("menu_item", { active: choosingBtn.id === 6 })}>
             HỦY
           </div>
         </button>
+        {/* {choosingBtn && ( */}
         <div
           className={cx("slider")}
           style={{
-            left: choosingTab.offsetLeft,
-            width: choosingTab.offsetWidth,
+            left: choosingBtn.target?.offsetLeft,
+            width: choosingBtn.target?.offsetWidth + 20,
           }}
         ></div>
+        {/* )} */}
       </div>
       <div className={cx("transaction")}>
         <div className={cx("no_product")}>Không có đơn hàng nào</div>

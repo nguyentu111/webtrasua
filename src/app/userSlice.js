@@ -32,7 +32,7 @@ const userSlice = createSlice({
     },
     [loginUser.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.error;
+      state.error = action.payload;
     },
     [loginUser.fulfilled]: (state, action) => {
       state.loading = false;

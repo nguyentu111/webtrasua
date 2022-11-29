@@ -13,10 +13,11 @@ function SuggessionProducts() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-
+    const abortController = new AbortController();
+    const { signal } = abortController;
     const fetchAPI = async () => {
       setLoading(true);
-      const result = await bavarageApi.getSugges();
+      const result = await bavarageApi.getSugges(signal);
       setSuggesBavarage(result);
       setLoading(false);
     };
