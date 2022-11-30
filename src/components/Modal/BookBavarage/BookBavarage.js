@@ -30,14 +30,13 @@ const css1 = {
 }
 const cx = classNames.bind(styles);
 
-function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValue }) {
+function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValue, setItems }) {
   const [quantity, setQuantity] = useState(1);
   const items = useCart()
 
-  const [item, setItem] = useState({ 'idcart': 0, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+  const [item, setItem] = useState({ 'idcart': 0, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
   try {
     useEffect(() => setQuantity(itemFix.qty), [itemFix.qty])
-    console.log("sl:"+itemFix.qty)
   }
   catch (e) {
 
@@ -80,11 +79,15 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
   const dispatch = useDispatchCart()
   const addToCart = () => {
     const clone = item
-    clone['idcart'] = items.length
+    console.log(items)
+    if(items.length==0) clone['idcart'] = items.length + 1
+    else clone['idcart'] = items[items.length-1].idcart + 1
     dispatch({ type: 'ADD', item: clone })
     setOpenModel(false)
     setQuantity(1)
-    setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+    if(items.length==0) setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+    else setItem({ 'idcart': items[items.length-1].idcart + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+
   }
 
   const addToCart1 = () => {
@@ -96,6 +99,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
     setValue(clone.qty)
     setOpenModel(false)
     setQuantity(quantity)
+    setItems(prev=>prev+1-1)
   }
 
   if (isFix) {
@@ -110,7 +114,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
           <div className={cx("wapper")}>
             <button
               className={cx("modal-close")}
-              onClick={() => {setOpenModel(false) }}
+              onClick={() => { setQuantity(itemFix.qty); setOpenModel(false) }}
             >
               <FontAwesomeIcon icon={faClose} />
             </button>
@@ -124,7 +128,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                 <div className={cx("price-quantity")}>
                   <span className={cx("price")}>50.000&nbsp;đ</span>
                   <div className={cx("quantity")}>
-                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { if(quantity-1>=0) {setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) }}}>-</button>
+                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { if(quantity-1>0) {setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) }}}>-</button>
                     <span className={cx("quantity-value")}>{quantity}</span>
                     <button className={cx("quantity-increase-btn")} onClick={(e) => { setQuantity(quantity + 1); handleClick('qty', quantity + 1, e) }}>+</button>
                   </div>
@@ -134,7 +138,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                   <div className={cx("size-options")}>
                     <button onClick={(e) => handleClickSize('size', 'S', e)} className={cx("size-options-btn")}>
                       <div className={cx("size-option-top")}>S</div>
-                      <div style={itemFix['size'] == 'S' ? css : css} className={cx("size-option-bot", "active")}>
+                      <div style={itemFix['size'] == 'S' ? css : css0} className={cx("size-option-bot")}>
                         0 &nbsp;đ
                       </div>
                     </button>
@@ -232,7 +236,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                   <div className={cx("price-quantity")}>
                     <span className={cx("price")}>50.000&nbsp;đ</span>
                     <div className={cx("quantity")}>
-                      <button className={cx("quantity-decrease-btn")} onClick={() => { if(quantity-1>=0)  {setQuantity(quantity - 1); handleClick('qty', quantity - 1) }}}>-</button>
+                      <button className={cx("quantity-decrease-btn")} onClick={() => { if(quantity-1>0)  {setQuantity(quantity - 1); handleClick('qty', quantity - 1) }}}>-</button>
                       <span className={cx("quantity-value")}>{quantity}</span>
                       <button className={cx("quantity-increase-btn")} onClick={() => { setQuantity(quantity + 1); handleClick('qty', quantity + 1) }}>+</button>
                     </div>

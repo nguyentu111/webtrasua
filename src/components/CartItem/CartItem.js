@@ -18,6 +18,7 @@ function CartItem(props) {
   useEffect(() => {
     setQuantity(props.item.qty)
   }, [props.item.qty])
+  console.log(props.item)
   return (
     <>
       <div className={cx("wapper")}>
@@ -37,7 +38,7 @@ function CartItem(props) {
           </div>
         </div>
         <div className={cx("actions")}>
-          <button className={cx("edit")} onClick={() => { setOpenModel(true); setFix(true) }}>
+          <button className={cx("edit")} onClick={() => { setOpenModel(true); setFix(true)}}>
             <FontAwesomeIcon icon={faPen} />
           </button>
           <button className={cx("delete")} onClick={() => dispatch({ type: 'DEL', item: props.item })}>
@@ -45,7 +46,7 @@ function CartItem(props) {
           </button>
         </div>
       </div>
-      <BookBavarage openModel={openModel} setOpenModel={setOpenModel} isFix={fix} setFix={setFix} itemFix={props.item} setValue={setQuantity} />
+      <BookBavarage openModel={openModel} setOpenModel={setOpenModel} isFix={fix} setFix={setFix} itemFix={props.item} setValue={setQuantity} setItems={props.setItems} />
     </>
   );
 }

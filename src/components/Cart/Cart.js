@@ -22,6 +22,7 @@ function Cart() {
   const anchor = "right";
   const items = useCart()
   const [it, setItems] = useState(items.length)
+  console.log('cart item')
   const sum = items.reduce(
     (accumulator, currentValue) => accumulator + currentValue.qty,
     0,
