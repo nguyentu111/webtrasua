@@ -11,6 +11,7 @@ import { useDispatchCart } from "~/context/cartContext";
 const cx = classNames.bind(styles);
 function CartItem(props) {
   const [quantity, setQuantity] = useState();
+  console.log("ql:"+quantity)
   const [openModel, setOpenModel] = useState(false);
   const [fix, setFix] = useState(false)
   const dispatch = useDispatchCart()
