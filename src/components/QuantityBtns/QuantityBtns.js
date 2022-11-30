@@ -8,16 +8,20 @@ const cx = classNames.bind(styles);
 function QuantityBtns({ id, value, setValue, canZero, setItems }) {
   const dispatch = useDispatchCart();
   const items = useCart()
-  console.log("value:"+value)
+  console.log("value:" + value)
   const handleDecrease = () => {
-    for (let i of items) {
-      if (i.idcart === id) {
-        dispatch({ type: 'MINUS_QTY', item: i })
-        break
+
+
+    if (value >= 1) {
+      for (let i of items) {
+        if (i.idcart === id) {
+          dispatch({ type: 'MINUS_QTY', item: i })
+          break
+        }
       }
+      setValue((prev) => prev - 1);
+      setItems((prev) => prev - 1)
     }
-    setItems((prev) => prev - 1)
-    if (value > 1) setValue((prev) => prev - 1);
     else if (canZero && value === 1) setValue(0);
   };
   const handleIncrease = () => {

@@ -124,7 +124,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                 <div className={cx("price-quantity")}>
                   <span className={cx("price")}>50.000&nbsp;đ</span>
                   <div className={cx("quantity")}>
-                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) }}>-</button>
+                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { if(quantity-1>=0) {setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) }}}>-</button>
                     <span className={cx("quantity-value")}>{quantity}</span>
                     <button className={cx("quantity-increase-btn")} onClick={(e) => { setQuantity(quantity + 1); handleClick('qty', quantity + 1, e) }}>+</button>
                   </div>
@@ -232,7 +232,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                   <div className={cx("price-quantity")}>
                     <span className={cx("price")}>50.000&nbsp;đ</span>
                     <div className={cx("quantity")}>
-                      <button className={cx("quantity-decrease-btn")} onClick={() => { setQuantity(quantity - 1); handleClick('qty', quantity - 1) }}>-</button>
+                      <button className={cx("quantity-decrease-btn")} onClick={() => { if(quantity-1>=0)  {setQuantity(quantity - 1); handleClick('qty', quantity - 1) }}}>-</button>
                       <span className={cx("quantity-value")}>{quantity}</span>
                       <button className={cx("quantity-increase-btn")} onClick={() => { setQuantity(quantity + 1); handleClick('qty', quantity + 1) }}>+</button>
                     </div>
