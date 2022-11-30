@@ -11,18 +11,18 @@ import store from "./app/store";
 import { CartProvider } from './context/cartContext.js'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyles>
-        <ScrollToTop />
-        <Provider store={store}>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </Provider>
-      </GlobalStyles>
-    </BrowserRouter>
-  </React.StrictMode>
+
+  <BrowserRouter>
+    <GlobalStyles>
+      <ScrollToTop />
+      <Provider store={store}>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </Provider>
+    </GlobalStyles>
+  </BrowserRouter>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

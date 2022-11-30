@@ -22,6 +22,7 @@ function Cart() {
   const anchor = "right";
 
   const items = useCart()
+  const [it, setItems] = useState(items.length)
   const sum = items.reduce(
     (accumulator, currentValue) => accumulator + currentValue.qty,
     0,
@@ -52,21 +53,24 @@ function Cart() {
               <span className={cx("bag-icon")}>
                 <FontAwesomeIcon icon={faBagShopping} />
               </span>
-              <span className={cx("title")}>Giỏ hàng của bạn (1 món)</span>
+              <span className={cx("title")}>Giỏ hàng của bạn ({sum} món)</span>
             </div>
             <div className={cx("body")}>
-              <CartItem />
-              <CartItem />
-              <CartItem />
-              <CartItem />
-              <CartItem />
-              <CartItem />
+              {
+                items.map((i) => {
+                  return <CartItem item={i} setItems={setItems}/>
+                })
+              }
+
             </div>
             <div className={cx("check-out")}>
               <div className={cx("summary-price")}>
                 <div className={cx("total-money")}>
                   <span className={cx("label")}>Tổng tiền tạm tính</span>
-                  <span className={cx("price")}> 310.000&nbsp;đ</span>
+                  <span className={cx("price")}> {items.reduce(
+                    (accumulator, currentValue) => accumulator + currentValue.price*currentValue.qty,
+                    0,
+                  )}&nbsp;đ</span>
                 </div>
                 <div className={cx("total-money")}>
                   <span className={cx("label")}>Mã giảm giá</span>
@@ -79,7 +83,10 @@ function Cart() {
                 </div>
                 <div className={cx("total-money")}>
                   <span className={cx("label")}>Tổng tiền (Đã có VAT)</span>
-                  <span className={cx("price-strong")}> 310.000&nbsp;đ</span>
+                  <span className={cx("price-strong")}>{items.reduce(
+                    (accumulator, currentValue) => accumulator + currentValue.price*currentValue.qty,
+                    0,
+                  )} &nbsp;đ</span>
                 </div>
               </div>
               <button className={cx("check-out-btn")}>THANH TOÁN</button>

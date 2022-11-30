@@ -1,14 +1,35 @@
 import { faPlus, faSubtract } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { setRef } from "@mui/material";
 import classNames from "classnames/bind";
+import { useCart, useDispatchCart } from "~/context/cartContext";
 import styles from "./QuantityBtns.module.scss";
 const cx = classNames.bind(styles);
-function QuantityBtns({ value, setValue, canZero }) {
+function QuantityBtns({ id, value, setValue, canZero, setItems }) {
+  const dispatch = useDispatchCart();
+  const items = useCart()
+
   const handleDecrease = () => {
+    for (let i of items) {
+      if (i.idcart === id) {
+        dispatch({ type: 'MINUS_QTY', item: i })
+        break
+      }
+    }
+    setItems((prev) => prev - 1)
     if (value > 1) setValue((prev) => prev - 1);
     else if (canZero && value === 1) setValue(0);
   };
   const handleIncrease = () => {
+
+    for (let i of items) {
+      if (i.idcart === id) {
+        dispatch({ type: 'ADD_QTY', item: i })
+        console.log(123)
+        break
+      }
+    }
+    setItems((prev) => prev + 1)
     setValue((prev) => prev + 1);
   };
   return (
