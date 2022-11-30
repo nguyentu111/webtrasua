@@ -7,7 +7,7 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import QuantityBtns from "../QuantityBtns/QuantityBtns";
 import { useState, useEffect } from "react";
 import BookBavarage from "../Modal/BookBavarage/BookBavarage";
-import { useDispatchCart } from "~/context/cartContext";
+import { useCart, useDispatchCart } from "~/context/cartContext";
 const cx = classNames.bind(styles);
 function CartItem(props) {
   const [quantity, setQuantity] = useState();
@@ -15,6 +15,7 @@ function CartItem(props) {
   const [openModel, setOpenModel] = useState(false);
   const [fix, setFix] = useState(false)
   const dispatch = useDispatchCart()
+  const items = useCart()
   useEffect(() => {
     setQuantity(props.item.qty)
   }, [props.item.qty])

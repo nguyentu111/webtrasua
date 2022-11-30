@@ -12,7 +12,7 @@ const cartReducer = (state, action) => {
                 if (i.idcart === action.item.idcart) {
                     i.qty = i.qty + 1
                     console.log(i)
-                    return state
+                    return [...state]
                 }
             }
 
@@ -22,17 +22,16 @@ const cartReducer = (state, action) => {
                 if (i.idcart === action.item.idcart) {
                     i.qty = i.qty - 1
                     console.log(i)
-                    return state
+                    return [...state]
                 }
             }
-            return state
         }
         case 'DEL': {
             console.log(state)
             console.log(action.item.idcart)
             state = state.filter((i) => { return i.idcart !== action.item.idcart })
             console.log(state)
-            return state
+            return [...state]
         }
         case 'FIX': {
             console.log(state)
@@ -41,7 +40,7 @@ const cartReducer = (state, action) => {
             state[idx] = action.item
             console.log("new state:")
             console.log(state)
-            return state
+            return [...state]
         }
         default:
             throw new Error('No action type' + `${action.type}`)

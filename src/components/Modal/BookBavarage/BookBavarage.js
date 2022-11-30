@@ -36,7 +36,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
 
   const [item, setItem] = useState({ 'idcart': 0, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
   try {
-    useEffect(() => setQuantity(itemFix.qty), [itemFix.qty])
+    useEffect(() => {setQuantity(itemFix.qty);setItem(itemFix)}, [itemFix.qty])
   }
   catch (e) {
 
@@ -85,21 +85,23 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
     dispatch({ type: 'ADD', item: clone })
     setOpenModel(false)
     setQuantity(1)
-    if(items.length==0) setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
-    else setItem({ 'idcart': items[items.length-1].idcart + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+    if(items.length==0) setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+    else setItem({ 'idcart': items[items.length-1].idcart + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
 
   }
 
   const addToCart1 = () => {
-    const clone = item
+    const clone = {...item}
     clone['idcart'] = itemFix.idcart
     console.log('clone:')
-    console.log(clone)
+    console.log(clone===item)
     dispatch({ type: 'FIX', item: clone })
+    console.log("cslq:"+clone.qty)
     setValue(clone.qty)
     setOpenModel(false)
+    
     setQuantity(quantity)
-    setItems(prev=>prev+1-1)
+    // setItems(prev=>prev+1-1)
   }
 
   if (isFix) {

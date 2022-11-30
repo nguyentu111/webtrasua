@@ -58,7 +58,7 @@ function Cart() {
             <div className={cx("body")}>
               {
                 items.map((i) => {
-                  return <CartItem item={i} setItems={setItems}/>
+                  return <CartItem item={i} setItems={setItems} key={i.idcart}/>
                 })
               }
 
