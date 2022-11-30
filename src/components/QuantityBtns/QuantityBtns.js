@@ -12,7 +12,7 @@ function QuantityBtns({ id, value, setValue, canZero, setItems }) {
   const handleDecrease = () => {
 
 
-    if (value >= 1) {
+    if (value > 1) {
       for (let i of items) {
         if (i.idcart === id) {
           dispatch({ type: 'MINUS_QTY', item: i })
