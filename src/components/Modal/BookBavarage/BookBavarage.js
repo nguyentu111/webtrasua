@@ -2,7 +2,7 @@ import { Box, Modal } from "@mui/material";
 import classNames from "classnames/bind";
 import styles from "./BookBavarage.module.scss";
 import images from "~/assets/images/bavarage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { faCartPlus, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCart, useDispatchCart } from "~/context/cartContext";
@@ -35,7 +35,14 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
   const items = useCart()
 
   const [item, setItem] = useState({ 'idcart': 0, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+  try {
+    useEffect(() => setQuantity(itemFix.qty), [itemFix.qty])
+    console.log("sl:"+itemFix.qty)
+  }
+  catch (e) {
 
+  }
+  
   const handleClickSize = (type, value, e) => {
     const clone = item
     clone[`${type}`] = value
@@ -77,22 +84,25 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
     dispatch({ type: 'ADD', item: clone })
     setOpenModel(false)
     setQuantity(1)
+    setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': '', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
   }
 
   const addToCart1 = () => {
     const clone = item
     clone['idcart'] = itemFix.idcart
+    console.log('clone:')
+    console.log(clone)
     dispatch({ type: 'FIX', item: clone })
     setValue(clone.qty)
     setOpenModel(false)
-    setQuantity(1)
+    setQuantity(quantity)
   }
 
   if (isFix) {
     return (<div onClick={(e) => e.preventDefault()}>
       <Modal
         open={openModel}
-        onClose={() => {setQuantity(1);setOpenModel(false)}}
+        onClose={() => {setOpenModel(false) }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -100,7 +110,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
           <div className={cx("wapper")}>
             <button
               className={cx("modal-close")}
-              onClick={() => {setQuantity(1);setOpenModel(false)}}
+              onClick={() => {setOpenModel(false) }}
             >
               <FontAwesomeIcon icon={faClose} />
             </button>
@@ -114,9 +124,9 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                 <div className={cx("price-quantity")}>
                   <span className={cx("price")}>50.000&nbsp;đ</span>
                   <div className={cx("quantity")}>
-                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { (quantity)<itemFix.qty ? setQuantity(itemFix.qty - 1): setQuantity(quantity - 1); handleClick('qty', itemFix.qty - 1, e) }}>-</button>
-                    <span className={cx("quantity-value")}>{(quantity)<itemFix.qty ? itemFix.qty : quantity}</span>
-                    <button className={cx("quantity-increase-btn")} onClick={(e) => {(quantity)<itemFix.qty ? setQuantity(itemFix.qty + 1): setQuantity(quantity + 1); handleClick('qty', itemFix.qty + 1, e) }}>+</button>
+                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) }}>-</button>
+                    <span className={cx("quantity-value")}>{quantity}</span>
+                    <button className={cx("quantity-increase-btn")} onClick={(e) => { setQuantity(quantity + 1); handleClick('qty', quantity + 1, e) }}>+</button>
                   </div>
                 </div>
                 <div className={cx("options")}>

@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function QuantityBtns({ id, value, setValue, canZero, setItems }) {
   const dispatch = useDispatchCart();
   const items = useCart()
-
+  console.log("value:"+value)
   const handleDecrease = () => {
     for (let i of items) {
       if (i.idcart === id) {
@@ -25,7 +25,6 @@ function QuantityBtns({ id, value, setValue, canZero, setItems }) {
     for (let i of items) {
       if (i.idcart === id) {
         dispatch({ type: 'ADD_QTY', item: i })
-        console.log(123)
         break
       }
     }

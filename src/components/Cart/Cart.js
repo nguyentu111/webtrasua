@@ -20,7 +20,6 @@ function Cart() {
   const [open, setOpen] = useState(false);
   const [openModalCoupon, setOpenModalCoupon] = useState(false);
   const anchor = "right";
-
   const items = useCart()
   const [it, setItems] = useState(items.length)
   const sum = items.reduce(

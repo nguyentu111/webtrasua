@@ -5,15 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import QuantityBtns from "../QuantityBtns/QuantityBtns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BookBavarage from "../Modal/BookBavarage/BookBavarage";
 import { useDispatchCart } from "~/context/cartContext";
 const cx = classNames.bind(styles);
 function CartItem(props) {
-  const [quantity, setQuantity] = useState(props.item.qty);
+  const [quantity, setQuantity] = useState();
   const [openModel, setOpenModel] = useState(false);
   const [fix, setFix] = useState(false)
   const dispatch = useDispatchCart()
+  useEffect(() => {
+    setQuantity(props.item.qty)
+  }, [props.item.qty])
   return (
     <>
       <div className={cx("wapper")}>
@@ -29,19 +32,19 @@ function CartItem(props) {
           <div className={cx("bot")}>
             <div className={cx("price")}>50.000 ₫</div>
             {/*  */}
-            <QuantityBtns id={props.item.idcart} value={quantity} setValue={setQuantity} setItems={props.setItems}/>
+            <QuantityBtns id={props.item.idcart} value={quantity} setValue={setQuantity} setItems={props.setItems} />
           </div>
         </div>
         <div className={cx("actions")}>
-          <button className={cx("edit")} onClick={() => {setOpenModel(true);setFix(true)}}>
+          <button className={cx("edit")} onClick={() => { setOpenModel(true); setFix(true) }}>
             <FontAwesomeIcon icon={faPen} />
           </button>
-          <button className={cx("delete")} onClick={() => dispatch({type:'DEL', item: props.item})}>
+          <button className={cx("delete")} onClick={() => dispatch({ type: 'DEL', item: props.item })}>
             <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
       </div>
-      <BookBavarage openModel={openModel} setOpenModel={setOpenModel} isFix={fix} setFix={setFix} itemFix={props.item} setValue={setQuantity}  />
+      <BookBavarage openModel={openModel} setOpenModel={setOpenModel} isFix={fix} setFix={setFix} itemFix={props.item} setValue={setQuantity} />
     </>
   );
 }

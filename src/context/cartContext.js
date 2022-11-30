@@ -28,16 +28,20 @@ const cartReducer = (state, action) => {
             return state
         }
         case 'DEL': {
-            state = state.filter((i) => { return i.idcart != action.item.idcart })
+            console.log(state)
+            console.log(action.item.idcart)
+            state = state.filter((i) => { return i.idcart !== action.item.idcart })
+            console.log(state)
             return state
         }
         case 'FIX': {
             console.log(state)
-            console.log(action.item.idcart)
-            
-            state = state.filter((i) => { return i.idcart !== action.item.idcart })
+            console.log(action.item)
+            let idx = state.findIndex((i) => i.idcart===action.item.idcart)
+            state[idx] = action.item
+            console.log("new state:")
             console.log(state)
-            return [...state, action.item]
+            return state
         }
         default:
             throw new Error('No action type' + `${action.type}`)
