@@ -10,10 +10,26 @@ import images from "~/assets/images/bavarage";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookBavarage from "~/components/Modal/BookBavarage/BookBavarage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const [openModel, setOpenModel] = useState(false);
+  const { id } = useParams()
+  const [data, setData] = useState([])
+  useEffect(() => {
+    axios.get('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks', { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+      .then((result) => {
+        const getData = result.data.data.filter((i) => {
+          return i.id == id
+        })
+        return setData(getData[0])
+      })
+      .catch((e) => {
+
+      })
+  }, [id])
   return (
     <>
       <div className={cx("wrapper")}>
@@ -28,8 +44,8 @@ function ProductDetail() {
             </button>
           </div>
           <div className={cx("right_content")}>
-            <div className={cx("name")}>Trà Vải - Lài</div>
-            <div className={cx("price")}>40.000&nbsp;đ</div>
+            <div className={cx("name")}>{data.name}</div>
+            <div className={cx("price")}>{data.price}&nbsp;đ</div>
             <button
               className={cx("btn")}
               onClick={() => {
@@ -45,7 +61,7 @@ function ProductDetail() {
         </div>
         <Cart />
       </div>
-      <BookBavarage openModel={openModel} setOpenModel={setOpenModel} />
+      {data.length === 0 ? console.log('loading') : <BookBavarage data={data} openModel={openModel} setOpenModel={setOpenModel} />}
     </>
   );
 }

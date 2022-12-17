@@ -30,18 +30,17 @@ const css1 = {
 }
 const cx = classNames.bind(styles);
 
-function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValue, setItems }) {
+function BookBavarage({ data, openModel, setOpenModel, isFix, itemFix, setFix, setValue, setItems }) {
   const [quantity, setQuantity] = useState(1);
   const items = useCart()
-
-  const [item, setItem] = useState({ 'idcart': 0, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
+  const [item, setItem] = useState({ 'idcart': 0, 'qty': 1, 'id': data.id, 'price': data.price, 'size': data.size[0], 'toppings': [] })
   try {
-    useEffect(() => {setQuantity(itemFix.qty);setItem(itemFix)}, [itemFix.qty])
+    useEffect(() => { setQuantity(itemFix.qty); setItem(itemFix) }, [itemFix.qty])
   }
   catch (e) {
 
   }
-  
+
   const handleClickSize = (type, value, e) => {
     const clone = item
     clone[`${type}`] = value
@@ -53,8 +52,6 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
       else colect[i].lastChild.style.background = "gray"
     }
   }
-
-
 
 
   const handleClick = (type, value, e) => {
@@ -76,30 +73,76 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
     }
   }
 
+  const onClickTpMinus = (id) => {
+    const clone = { ...item }
+    let i = 0;
+
+    for (let e of item.toppings) {
+      if (e.tp.id == id.id) {
+        break
+      }
+      i++
+    }
+
+    if (clone.toppings[i].sl == 1) {
+      clone.toppings=clone.toppings.filter((i) => {
+        return i.tp.id != id.id
+      })
+      console.log(clone.toppings)
+      setItem(clone)
+      return
+    }
+
+    clone.toppings[i].sl = clone.toppings[i].sl - 1;
+    setItem(() => {
+      return clone
+    })
+  }
+
+  const onClickTpAdd = (id) => {
+    const clone = { ...item }
+    let i = 0;
+    let idx = -1
+    for (let e of item.toppings) {
+      if (e.tp.id == id.id) {
+        idx = i
+        break
+      }
+      i++
+    }
+    if (idx == -1) {
+      let obj = { 'tp': id, 'sl': 1 }
+      setItem(prev => {
+        return { ...prev, 'toppings': [...item.toppings, obj] }
+      })
+      return
+    }
+    clone.toppings[idx].sl += 1;
+    setItem(clone)
+  }
+
   const dispatch = useDispatchCart()
   const addToCart = () => {
     const clone = item
-    console.log(items)
-    if(items.length==0) clone['idcart'] = items.length + 1
-    else clone['idcart'] = items[items.length-1].idcart + 1
+    if (items.length == 0) clone['idcart'] = items.length + 1
+    else clone['idcart'] = items[items.length - 1].idcart + 1
     dispatch({ type: 'ADD', item: clone })
     setOpenModel(false)
     setQuantity(1)
-    if(items.length==0) setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
-    else setItem({ 'idcart': items[items.length-1].idcart + 1, 'qty': 1, 'id': 'td', 'price': 55000, 'size': 'S', 'sugar': {}, 'tea': {}, 'ice': {}, 'pea': {} })
-
+    if (items.length == 0) setItem({ 'idcart': items.length + 1, 'qty': 1, 'id': data.id, 'price': data.price, 'size': data.size[0], 'toppings': [] })
+    else setItem({ 'idcart': items[items.length - 1].idcart + 1, 'qty': 1, 'id': data.id, 'price': data.price, 'size': data.size[0], 'toppings': [] })
   }
 
   const addToCart1 = () => {
-    const clone = {...item}
+    const clone = { ...item }
     clone['idcart'] = itemFix.idcart
     console.log('clone:')
-    console.log(clone===item)
+    console.log(clone === item)
     dispatch({ type: 'FIX', item: clone })
-    console.log("cslq:"+clone.qty)
+    console.log("cslq:" + clone.qty)
     setValue(clone.qty)
     setOpenModel(false)
-    
+
     setQuantity(quantity)
     // setItems(prev=>prev+1-1)
   }
@@ -108,7 +151,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
     return (<div onClick={(e) => e.preventDefault()}>
       <Modal
         open={openModel}
-        onClose={() => {setOpenModel(false) }}
+        onClose={() => { setOpenModel(false) }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -125,12 +168,12 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                 <img src={images.trasua} alt="" className={cx("image")} />
               </div>
               <div className={cx("content-right")}>
-                <div className={cx("name")}>Trà đào phúc long</div>
-                <div className={cx("sub_name")}>Trà đào phúc long</div>
+                <div className={cx("name")}>{itemFix.name}</div>
+                <div className={cx("sub_name")}>{itemFix.name}</div>
                 <div className={cx("price-quantity")}>
-                  <span className={cx("price")}>50.000&nbsp;đ</span>
+                  <span className={cx("price")}>{itemFix.price}&nbsp;đ</span>
                   <div className={cx("quantity")}>
-                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { if(quantity-1>0) {setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) }}}>-</button>
+                    <button className={cx("quantity-decrease-btn")} onClick={(e) => { if (quantity - 1 > 0) { setQuantity(quantity - 1); handleClick('qty', quantity - 1, e) } }}>-</button>
                     <span className={cx("quantity-value")}>{quantity}</span>
                     <button className={cx("quantity-increase-btn")} onClick={(e) => { setQuantity(quantity + 1); handleClick('qty', quantity + 1, e) }}>+</button>
                   </div>
@@ -138,61 +181,37 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                 <div className={cx("options")}>
                   <div className={cx("option-title")}>Chọn kích cỡ</div>
                   <div className={cx("size-options")}>
-                    <button onClick={(e) => handleClickSize('size', 'S', e)} className={cx("size-options-btn")}>
-                      <div className={cx("size-option-top")}>S</div>
-                      <div style={itemFix['size'] == 'S' ? css : css0} className={cx("size-option-bot")}>
-                        0 &nbsp;đ
-                      </div>
-                    </button>
-                    <button onClick={(e) => handleClickSize('size', 'M', e)} className={cx("size-options-btn")}>
-                      <div className={cx("size-option-top")}>M</div>
-                      <div style={itemFix['size'] == 'M' ? css : css0} className={cx("size-option-bot")}>+5000 &nbsp;đ</div>
-                    </button>
-                    <button onClick={(e) => handleClickSize('size', 'L', e)} className={cx("size-options-btn")}>
-                      <div className={cx("size-option-top")}>L</div>
-                      <div style={itemFix['size'] == 'L' ? css : css0} className={cx("size-option-bot")}>
-                        +15000 &nbsp;đ
-                      </div>
-                    </button>
-                  </div>
-                  <div className={cx("option-title")}>Ngọt</div>
-                  <div className={cx("options-btn")}>
-                    <button style={itemFix['sugar'][0] == 's0' ? css : css1} onClick={(e) => handleClick('sugar', ['s0', 'Ít'], e)} className={cx("option-btn", "sugar")}>Ít</button>
-                    <button style={itemFix['sugar'][0] == 's1' ? css : css1} onClick={(e) => handleClick('sugar', ['s1', 'Bình thường'], e)} className={cx("option-btn", "sugar")}>Bình thường</button>
-                    <button style={itemFix['sugar'][0] == 's2' ? css : css1} onClick={(e) => handleClick('sugar', ['s2', 'Nhiều'], e)} className={cx("option-btn", "sugar")}>Nhiều</button>
-                  </div>
-                  <div className={cx("option-title")}>Trà</div>
-                  <div className={cx("options-btn")}>
-                    <button style={itemFix['tea'][0] == 't0' ? css : css1} onClick={(e) => handleClick('tea', ['t0', 'Ít'], e)} className={cx("option-btn", "tea")}>Ít</button>
-                    <button style={itemFix['tea'][0] == 't1' ? css : css1} onClick={(e) => handleClick('tea', ['t1', 'Bình thường'], e)} className={cx("option-btn", "tea")}>Bình thường</button>
-                    <button style={itemFix['tea'][0] == 't2' ? css : css1} onClick={(e) => handleClick('tea', ['t2', 'Nhiều'], e)} className={cx("option-btn", "tea")}>Nhiều</button>
-                  </div>
-                  <div className={cx("option-title")}>Đá</div>
-                  <div className={cx("options-btn")}>
-                    <button style={itemFix['ice'][0] == 'i0' ? css : css1} onClick={(e) => handleClick('ice', ['i0', 'Ít'], e)} className={cx("option-btn", "ice")}>Ít</button>
-                    <button style={itemFix['ice'][0] == 'i1' ? css : css1} onClick={(e) => handleClick('ice', ['i1', 'Bình thường'], e)} className={cx("option-btn", "ice")}>Bình thường</button>
-                    <button style={itemFix['ice'][0] == 'i2' ? css : css1} onClick={(e) => handleClick('ice', ['i2', 'Nhiều'], e)} className={cx("option-btn", "ice")}>Nhiều</button>
-                  </div>
-                  <div className={cx("option-title")}>Đào</div>
-                  <div className={cx("options-btn")}>
-                    <button style={itemFix['pea'][0] == 'p0' ? css : css1} onClick={(e) => handleClick('pea', ['p0', 'Bình thường'], e)} className={cx("option-btn", "pea")}>Bình thường</button>
-                    <button style={itemFix['pea'][0] == 'p1' ? css : css1} onClick={(e) => handleClick('pea', ['p1', 'Không'], e)} className={cx("option-btn", "pea")}>Không</button>
+                    {
+                      data.size.map((i) => {
+                        return <button onClick={(e) => handleClickSize('size', i, e)} className={cx("size-options-btn")}>
+                          <div className={cx("size-option-top")}>{i.name}</div>
+                          <div style={itemFix.size.name == i.name ? css : css0} className={cx("size-option-bot")}>+5000 &nbsp;đ</div>
+                        </button>
+                      })
+                    }
                   </div>
                   <div className={cx("option-title")}>Chọn topping</div>
                   <div className={cx("topping")}>
-                    <div className={cx("topping-left")}>
-                      <div className={cx("topping-name")}>
-                        Đào thêm (3 miếng)
-                      </div>
-                      <div className={cx("topping-price")}>15.000&nbsp;đ</div>
-                    </div>
-                    <div className={cx("topping-right")}>
-                      <button className={cx("quantity-decrease-btn")}>-</button>
-                      <span className={cx("quantity")}>
-                        <span className={cx("quantity-value")}>{quantity}</span>
-                      </span>
-                      <button className={cx("quantity-increase-btn")}>+</button>
-                    </div>
+                    {
+                      data.toppings.map((i) => {
+                        return <>
+                          <div className={cx("topping-left")}>
+                            <div className={cx("topping-name")}>
+                              {i.name}
+                            </div>
+                            <div className={cx("topping-price")}>{i.price}&nbsp;đ</div>
+                          </div>
+                          <div className={cx("topping-right")}>
+                            <button onClick={() => onClickTpMinus(i)} className={cx("quantity-decrease-btn")}>-</button>
+                            <span className={cx("quantity")}>
+                              <span className={cx("quantity-value")}>{0 || (item.toppings.filter((ii) => { return ii.tp.id == i.id })).length == 0 ? 0 : (item.toppings.filter((ii) => { return ii.tp.id == i.id }))[0].sl}</span>
+                            </span>
+                            <button onClick={() => onClickTpAdd(i)} className={cx("quantity-increase-btn")}>+</button>
+                          </div>
+                        </>
+                      })
+                    }
+
                   </div>
                 </div>
               </div>
@@ -200,7 +219,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
             <button onClick={() => addToCart1()} className={cx("add-to-cart")}>
               <FontAwesomeIcon icon={faCartPlus} />
               <span style={{ marginLeft: "10px" }}>
-                Thêm vào giỏ hàng : 55.000 &nbsp;đ
+                Thêm vào giỏ hàng : {itemFix.price} &nbsp;đ
               </span>
             </button>
 
@@ -209,7 +228,7 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
 
         </Box>
       </Modal>
-    </div>)
+    </div >)
   }
   else {
     return (
@@ -233,12 +252,12 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                   <img src={images.trasua} alt="" className={cx("image")} />
                 </div>
                 <div className={cx("content-right")}>
-                  <div className={cx("name")}>Trà đào phúc long</div>
-                  <div className={cx("sub_name")}>Trà đào phúc long</div>
+                  <div className={cx("name")}>{data.name}</div>
+                  <div className={cx("sub_name")}>{data.name}</div>
                   <div className={cx("price-quantity")}>
-                    <span className={cx("price")}>50.000&nbsp;đ</span>
+                    <span className={cx("price")}>{data.price}&nbsp;đ</span>
                     <div className={cx("quantity")}>
-                      <button className={cx("quantity-decrease-btn")} onClick={() => { if(quantity-1>0)  {setQuantity(quantity - 1); handleClick('qty', quantity - 1) }}}>-</button>
+                      <button className={cx("quantity-decrease-btn")} onClick={() => { if (quantity - 1 > 0) { setQuantity(quantity - 1); handleClick('qty', quantity - 1) } }}>-</button>
                       <span className={cx("quantity-value")}>{quantity}</span>
                       <button className={cx("quantity-increase-btn")} onClick={() => { setQuantity(quantity + 1); handleClick('qty', quantity + 1) }}>+</button>
                     </div>
@@ -246,61 +265,36 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
                   <div className={cx("options")}>
                     <div className={cx("option-title")}>Chọn kích cỡ</div>
                     <div className={cx("size-options")}>
-                      <button onClick={(e) => handleClickSize('size', 'S', e)} className={cx("size-options-btn")}>
-                        <div className={cx("size-option-top")}>S</div>
-                        <div className={cx("size-option-bot", "active")}>
-                          0 &nbsp;đ
-                        </div>
-                      </button>
-                      <button onClick={(e) => handleClickSize('size', 'M', e)} className={cx("size-options-btn")}>
-                        <div className={cx("size-option-top")}>M</div>
-                        <div className={cx("size-option-bot")}>+5000 &nbsp;đ</div>
-                      </button>
-                      <button onClick={(e) => handleClickSize('size', 'L', e)} className={cx("size-options-btn")}>
-                        <div className={cx("size-option-top")}>L</div>
-                        <div className={cx("size-option-bot")}>
-                          +15000 &nbsp;đ
-                        </div>
-                      </button>
-                    </div>
-                    <div className={cx("option-title")}>Ngọt</div>
-                    <div className={cx("options-btn")}>
-                      <button onClick={(e) => handleClick('sugar', ['s0', 'Ít'], e)} className={cx("option-btn", "sugar")}>Ít</button>
-                      <button onClick={(e) => handleClick('sugar', ['s1', 'Bình thường'], e)} className={cx("option-btn", "sugar")}>Bình thường</button>
-                      <button onClick={(e) => handleClick('sugar', ['s2', 'Nhiều'], e)} className={cx("option-btn", "sugar")}>Nhiều</button>
-                    </div>
-                    <div className={cx("option-title")}>Trà</div>
-                    <div className={cx("options-btn")}>
-                      <button onClick={(e) => handleClick('tea', ['t0', 'Ít'], e)} className={cx("option-btn", "tea")}>Ít</button>
-                      <button onClick={(e) => handleClick('tea', ['t1', 'Bình thường'], e)} className={cx("option-btn", "tea")}>Bình thường</button>
-                      <button onClick={(e) => handleClick('tea', ['t2', 'Nhiều'], e)} className={cx("option-btn", "tea")}>Nhiều</button>
-                    </div>
-                    <div className={cx("option-title")}>Đá</div>
-                    <div className={cx("options-btn")}>
-                      <button onClick={(e) => handleClick('ice', ['i0', 'Ít'], e)} className={cx("option-btn", "ice")}>Ít</button>
-                      <button onClick={(e) => handleClick('ice', ['i1', 'Bình thường'], e)} className={cx("option-btn", "ice")}>Bình thường</button>
-                      <button onClick={(e) => handleClick('ice', ['i2', 'Nhiều'], e)} className={cx("option-btn", "ice")}>Nhiều</button>
-                    </div>
-                    <div className={cx("option-title")}>Đào</div>
-                    <div className={cx("options-btn")}>
-                      <button onClick={(e) => handleClick('pea', ['p0', 'Bình thường'], e)} className={cx("option-btn", "pea")}>Bình thường</button>
-                      <button onClick={(e) => handleClick('pea', ['p1', 'Không'], e)} className={cx("option-btn", "pea")}>Không</button>
+                      {
+                        data.size.map(i => {
+                          return <button onClick={(e) => handleClickSize('size', i, e)} className={cx("size-options-btn")}>
+                            <div className={cx("size-option-top")}>{i.name}</div>
+                            <div className={cx("size-option-bot", i.name == 'S' ? "active" : '')}>
+                              {i.price} &nbsp;đ
+                            </div>
+                          </button>
+                        })
+                      }
                     </div>
                     <div className={cx("option-title")}>Chọn topping</div>
                     <div className={cx("topping")}>
-                      <div className={cx("topping-left")}>
-                        <div className={cx("topping-name")}>
-                          Đào thêm (3 miếng)
-                        </div>
-                        <div className={cx("topping-price")}>15.000&nbsp;đ</div>
-                      </div>
-                      <div className={cx("topping-right")}>
-                        <button className={cx("quantity-decrease-btn")}>-</button>
-                        <span className={cx("quantity")}>
-                          <span className={cx("quantity-value")}>{quantity}</span>
-                        </span>
-                        <button className={cx("quantity-increase-btn")}>+</button>
-                      </div>
+                      {
+                        data.toppings.map((i) => {
+                          return <><div className={cx("topping-left")}>
+                            <div className={cx("topping-name")}>
+                              {i.name}
+                            </div>
+                            <div className={cx("topping-price")}>{i.price}&nbsp;đ</div>
+                          </div>
+                            <div className={cx("topping-right")}>
+                              <button onClick={() => onClickTpMinus(i)} className={cx("quantity-decrease-btn")}>-</button>
+                              <span className={cx("quantity")}>
+                                <span className={cx("quantity-value")}>{0 || (item.toppings.filter((ii) => { return ii.tp.id == i.id })).length == 0 ? 0 : (item.toppings.filter((ii) => { return ii.tp.id == i.id }))[0].sl}</span>
+                              </span>
+                              <button onClick={() => onClickTpAdd(i)} className={cx("quantity-increase-btn")}>+</button>
+                            </div></>
+                        })
+                      }
                     </div>
                   </div>
                 </div>
@@ -308,13 +302,10 @@ function BookBavarage({ openModel, setOpenModel, isFix, setFix, itemFix, setValu
               <button onClick={() => addToCart()} className={cx("add-to-cart")}>
                 <FontAwesomeIcon icon={faCartPlus} />
                 <span style={{ marginLeft: "10px" }}>
-                  Thêm vào giỏ hàng : 55.000 &nbsp;đ
+                  Thêm vào giỏ hàng : {data.price} &nbsp;đ
                 </span>
               </button>
-
-
             </div>
-
           </Box>
         </Modal>
       </div>

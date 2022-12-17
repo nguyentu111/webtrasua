@@ -22,11 +22,80 @@ function Cart() {
   const anchor = "right";
   const items = useCart()
   const [it, setItems] = useState(items.length)
-  console.log('cart item')
   const sum = items.reduce(
     (accumulator, currentValue) => accumulator + currentValue.qty,
     0,
   );
+
+  const pay = () => {
+    const clone = [...items]
+    const filteredArr = clone.reduce((acc, current) => {
+      const x = acc.find(item => item.size.id === current.size.id);
+      if (!x) {
+        const newCurr = {
+          ...current,
+          qty: current.qty,
+          toppings: []
+        }
+        for (let i = 0; i < current.qty; i++) {
+          newCurr.toppings.push(current.toppings);
+        }
+        return acc.concat([newCurr]);
+      } else {
+
+        const currData = x.toppings.filter(d => d == current.toppings);
+
+        if (!currData.length) {
+          for (let i = 0; i < current.qty; i++) {
+            x.toppings.push(current.toppings);
+          }
+
+          x.qty += current.qty
+          return acc;
+        } else {
+          return acc;
+        }
+
+      }
+    }, []);
+
+    const arr = []
+    filteredArr.forEach(element => {
+      const temp_Tp = element.toppings.filter(i => { return i.length != 0 })
+      element.toppings.forEach((i, idx) => { if (i.length != 0) temp_Tp[idx] = i })
+      temp_Tp.forEach((i, idx) => {
+        if (i.length != 0) temp_Tp[idx] = i
+      })
+
+      for (let e of temp_Tp.keys()) {
+        temp_Tp[e] = {
+          quan: 1, topping: [temp_Tp[e].map((tp) => { return { topping_id: tp.tp.id } })]
+        }
+
+      }
+
+
+      arr.push({ ...element, drink_detail_id: element.size.id, topping_list: temp_Tp })
+    });
+
+    const re = []
+    arr.forEach(element => {
+      const { idcart, size, id, toppings, ...res } = element
+      re.push(res)
+    });
+    const post_Order = {
+      "staff_id": null,
+      "branch_id": 1,
+      "shipping_id": 1,
+      "customer_id": null,
+      "address_id": null,
+      "note": null,
+      "created_at": "2022-1-1 12:12:00",
+      "paid": 0,
+      "order_detail": re
+    }
+    console.log(post_Order)
+  }
   return (
     <div className={cx("wrapper")}>
       <button
@@ -58,7 +127,7 @@ function Cart() {
             <div className={cx("body")}>
               {
                 items.map((i) => {
-                  return <CartItem item={i} setItems={setItems} key={i.idcart}/>
+                  return <CartItem item={i} setItems={setItems} key={i.idcart} />
                 })
               }
 
@@ -68,7 +137,7 @@ function Cart() {
                 <div className={cx("total-money")}>
                   <span className={cx("label")}>Tổng tiền tạm tính</span>
                   <span className={cx("price")}> {items.reduce(
-                    (accumulator, currentValue) => accumulator + currentValue.price*currentValue.qty,
+                    (accumulator, currentValue) => accumulator + currentValue.price * currentValue.qty + currentValue.toppings.reduce((a, b) => a + b.tp.price * b.sl, 0),
                     0,
                   )}&nbsp;đ</span>
                 </div>
@@ -84,12 +153,12 @@ function Cart() {
                 <div className={cx("total-money")}>
                   <span className={cx("label")}>Tổng tiền (Đã có VAT)</span>
                   <span className={cx("price-strong")}>{items.reduce(
-                    (accumulator, currentValue) => accumulator + currentValue.price*currentValue.qty,
+                    (accumulator, currentValue) => accumulator + currentValue.price * currentValue.qty + currentValue.toppings.reduce((a, b) => a + b.tp.price * b.sl, 0),
                     0,
                   )} &nbsp;đ</span>
                 </div>
               </div>
-              <button className={cx("check-out-btn")}>THANH TOÁN</button>
+              <button onClick={() => pay()} className={cx("check-out-btn")}>THANH TOÁN</button>
             </div>
             <ModalCoupon
               openModel={openModalCoupon}

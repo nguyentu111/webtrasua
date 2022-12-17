@@ -1,14 +1,16 @@
 import { FormGroup, Grid, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Alert, AlertTitle } from "@mui/material"
 import classNames from "classnames/bind";
 import { FastField, Field, Form, Formik } from "formik";
 import { useSelector } from "react-redux";
+import axios from "axios";
 import * as Yup from "yup";
 import InputMuiField from "~/components/custom-fields/InputMuiField/InputMuiField";
 import SelectMuiField from "~/components/custom-fields/SelectMuiField/SelectMuiField";
 import styles from "./Account.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import DatePickerField from "~/components/custom-fields/DatePickerField/DatePickerField";
 const cx = classNames.bind(styles);
 const options = [
@@ -35,8 +37,8 @@ const validationShema = Yup.object().shape({
   address: Yup.string().required("Thông tin bắt buộc"),
 });
 function Account() {
+  const currentUser1 = useSelector((state) => console.log(state));
   const currentUser = useSelector((state) => state.user.current);
-
   const initialValues = {
     fullname: "tu",
     phoneNumber: currentUser.phoneNumber,
@@ -51,9 +53,48 @@ function Account() {
   };
   const handleSubmit = (value) => {
     // console.log(value);
+
+    var data = JSON.stringify({
+      "name": "Lê Hoàng Y",
+      "gender": 0,
+      "phone_number": "0334566733",
+      "dob": "1998-1-1",
+      "active": 1
+    });
+
+    var config = {
+      method: 'post',
+      url: '127.0.0.1:8000/api/admin/customers',
+      headers: {
+        'Authorization': 'Bearer 8|sF6f2qPvFj60cRhja96VIpcBmqjv0QOWKurNJW0J',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        setAlert(true)
+        setTimeout(() => setAlert(false), 2000)
+      })
+      .catch(function (error) {
+        console.log(error);
+        setAlert(true)
+        setTimeout(() => setAlert(false), 2000)
+      });
   };
+
+  const [alert, setAlert] = useState(false)
   return (
     <div className={cx("wrapper")}>
+      <div className={alert ? cx("alert-shown") : cx("alert-hidden")}>
+        <Alert severity="success">
+          <AlertTitle>Thành công</AlertTitle>
+          Thêm thông tin thành công
+        </Alert>
+      </div>
       <div className={cx("title")}>Thông tin cá nhân</div>
       <div className={cx("body")}>
         <Formik

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import bavarageApi from "~/services/bavarageApi";
 import routes from "~/config/routes";
 import categories from "~/constant/category";
+import axios from "axios";
 const cx = classNames.bind(styles);
 function SuggessionProducts() {
   const [suggesBavarage, setSuggesBavarage] = useState([]);
@@ -17,9 +18,16 @@ function SuggessionProducts() {
     const { signal } = abortController;
     const fetchAPI = async () => {
       setLoading(true);
-      const result = await bavarageApi.getSugges(signal);
-      setSuggesBavarage(result);
-      setLoading(false);
+      //const result = await bavarageApi.getSugges(signal);
+      axios.get('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks',{headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+        .then((result) => {
+          setSuggesBavarage(result.data.data);
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+
     };
     fetchAPI();
   }, []);

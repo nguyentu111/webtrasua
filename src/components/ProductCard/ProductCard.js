@@ -38,7 +38,7 @@ function ProductCard({ data }) {
         </div>
       </Grid>
 
-      <BookBavarage openModel={openModel} setOpenModel={setOpenModel} />
+      <BookBavarage data={data} openModel={openModel} setOpenModel={setOpenModel} />
     </Link>
   );
 }
