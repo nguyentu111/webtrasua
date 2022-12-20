@@ -4,9 +4,15 @@ import { FastField, Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "~/components/custom-fields/InputField";
 import styles from "./FormPhone.module.scss";
-const cx = classNames.bind(styles);
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+axios.defaults.withCredentials = true
 
+const cx = classNames.bind(styles);
 function FormPhone({ setForm, setPhoneNumber }) {
+  const navigate = useNavigate()
+  const [otp, setOTP] = useState()
   const validationShema = Yup.object().shape({
     sdt: Yup.string()
       .required("Thông tin bắt buộc")
@@ -17,6 +23,15 @@ function FormPhone({ setForm, setPhoneNumber }) {
       ),
   });
   const handleSubmit = (values) => {
+    axios.post('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/login-customer', { phone_number: values.sdt }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/login-customer'
+      }
+    }).then(data => {
+      setOTP(data)
+      console.log(data)
+    })
     setForm(2);
     setPhoneNumber(values.sdt);
   };

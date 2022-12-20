@@ -7,11 +7,13 @@ import * as Yup from "yup";
 import { loginUser } from "~/app/userSlice";
 import InputField from "~/components/custom-fields/InputField";
 import styles from "./FormPassWord.module.scss";
+import { useNavigate } from "react-router-dom";
+
 const cx = classNames.bind(styles);
 
 function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const validationShema = Yup.object().shape({
     password: Yup.string().required("Thông tin bắt buộc"),
   });
@@ -23,6 +25,7 @@ function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
       const loggedUser = unwrapResult(actionResult);
       // console.log({ loggedUser });
       setOpenModel(false);
+      navigate('/customer/account')
     } catch (e) {
       // console.log("dang nhap that bai !! ", e);
     }
@@ -51,7 +54,7 @@ function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
             <FastField // thằng này ko render lại khi cả components re-render
               name="password"
               component={InputField}
-              placeholder="Nhập mật khẩu*"
+              placeholder="Nhập OTP nhận được"
               type="password"
               autoFocus={true}
             />

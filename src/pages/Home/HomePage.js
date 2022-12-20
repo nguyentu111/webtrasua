@@ -5,7 +5,6 @@ import React from "react";
 import SuggessionProducts from "~/components/SuggessionProducts/SuggessionProducts";
 import Homecategories from "~/components/HomeCategories/HomeCategories";
 import Cart from "~/components/Cart/Cart";
-
 const cx = classNames.bind(styles);
 
 function HomePage() {
