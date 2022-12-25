@@ -10,6 +10,7 @@ import HeadlessTippy from "@tippyjs/react/headless";
 import { SearchIcon } from "~/assets/Icons";
 import BavarageItem from "./BavarageItem/BavarageItem";
 import BavarageItemLoading from "./BavarageItemLoading/BavarageItemLoading";
+import { searchMood } from "~/services/searchService";
 const cx = classNames.bind(styles);
 function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -23,6 +24,7 @@ function Search() {
   const [searchResult1, setSearchResult1] = useState([]);
   const [showResult1, setShowResult1] = useState(true);
   const [loading1, setLoading1] = useState(false);
+  const [mood, setMood] = useState()
   const inputRef1 = useRef();
   const debounced1 = useDebounce(searchValue1, 500);
 
@@ -68,9 +70,11 @@ function Search() {
     const fetchAPI1 = async () => {
       setLoading1(true);
       setSearchResult1([]);
-      const result = await searchServices(debounced1);
+      const result = await searchMood(searchValue1);
+      setMood(result)
 
-      setSearchResult1(result);
+      setSearchResult1(result.list.special)
+      console.log(result.list.special)
       setLoading1(false);
     };
     fetchAPI1();
@@ -88,6 +92,9 @@ function Search() {
     if (searchValue1.startsWith(" ")) return;
     setSearchValue1(searchValue1);
   };
+  useEffect(() => {
+    setMood(undefined);
+  }, [searchValue1])
   return (
     <div>
       <div className={cx("searchbar")}>
@@ -144,7 +151,7 @@ function Search() {
           </div>
           {/* loadding */}
         </HeadlessTippy>
-              <span className={cx("spanf4m")}>Food for mood</span>
+        <span className={cx("spanf4m")}>Food for mood</span>
         <HeadlessTippy
           visible={(showResult1 && searchResult1.length > 0) || loading1}
           interactive
@@ -152,10 +159,10 @@ function Search() {
           render={(attrs) => (
             <div className={cx("search-result1")} tabIndex="-1" {...attrs}>
               <PoperWrapper>
-                <div className={cx("bavarage-label1")}>Thức uống phù hợp với tâm trạng của bạn:</div>
+                <div className={cx("bavarage-label1")}> {mood === undefined || searchValue1 === "" ? 'Siêu máy tính đang dự đoán tâm trạng của bạn và tìm đồ uống thích hợp...' : "Chúng tôi đoán rằng bạn đang cảm thấy '" + mood.mood + "', hãy thử những thức uống sau đây:"} </div>
                 <div className={cx("reasult_wrapp1")}>
                   {searchResult1.map((result) => (
-                    <BavarageItem key={result.data.id} data={result.data} />
+                    <BavarageItem key={result.id} data={result} />
                   ))}
                   {loading1 && (
                     <div style={{ marginBottom: "20px" }}>
