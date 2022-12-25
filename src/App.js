@@ -5,6 +5,7 @@ import { privateRoutes, publicRoutes } from "~/routes/routes";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 function App() {
   const currentUser = useSelector((state) => state.user.current);
+  
   return (
     <>
       <Routes>
@@ -40,7 +41,7 @@ function App() {
             <Route
               path={route.path}
               element={
-                currentUser.phoneNumber ? (
+                currentUser.status==='success' ? (
                   <Layout>
                     <Page />
                   </Layout>

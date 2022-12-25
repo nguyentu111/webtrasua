@@ -88,7 +88,6 @@ function BookBavarage({ data, openModel, setOpenModel, isFix, itemFix, setFix, s
       clone.toppings=clone.toppings.filter((i) => {
         return i.tp.id != id.id
       })
-      console.log(clone.toppings)
       setItem(clone)
       return
     }

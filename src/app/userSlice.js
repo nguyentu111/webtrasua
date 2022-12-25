@@ -8,7 +8,8 @@ export const loginUser = createAsyncThunk(
     // const currentUser = await userApi.getMe();
     //params là số điện thoại và password
     const currentUser = await login(params);
-    return currentUser;
+
+    return { ...currentUser, phoneNumber: currentUser.phone_number };
   }
 );
 const initialState = {
@@ -25,6 +26,9 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = "";
     },
+    register_complete: (state, action) => {
+      state.current = { ...state.current, status: 'true' };
+    }
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -37,11 +41,11 @@ const userSlice = createSlice({
     [loginUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.current = action.payload;
+      console.log(action.payload)
     },
   },
 });
 const { reducer, actions } = userSlice;
-console.log(reducer)
-console.log(userSlice)
 export const logout = actions.logout;
+export const register_complete = actions.register_complete;
 export default reducer;

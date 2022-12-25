@@ -19,6 +19,7 @@ function Account({ setOpenModel }) {
       </div>
     );
   };
+  console.log(currenUser.status==='fail' || currenUser.status === undefined)
   return (
     <div>
       <Tippy
@@ -28,12 +29,12 @@ function Account({ setOpenModel }) {
         animation={false}
         placement="bottom-end"
         hideOnClick={false}
-        disabled={!currenUser.phoneNumber}
+        disabled={currenUser.status==='fail' || currenUser.status === undefined}
         trigger="mouseenter" //fix auto show after disabled is false
       >
         <button
           className={cx("btn_user")}
-          onClick={() => setOpenModel(!currenUser.phoneNumber)}
+          onClick={() => setOpenModel(currenUser.status==='fail' || currenUser.status === undefined)}
         >
           <FontAwesomeIcon icon={faUser} />
         </button>

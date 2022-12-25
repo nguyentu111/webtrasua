@@ -7,12 +7,11 @@ import styles from "./FormPhone.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-axios.defaults.withCredentials = true
 
 const cx = classNames.bind(styles);
-function FormPhone({ setForm, setPhoneNumber }) {
+function FormPhone({ setForm, setPhoneNumber, setOTP }) {
   const navigate = useNavigate()
-  const [otp, setOTP] = useState()
+  
   const validationShema = Yup.object().shape({
     sdt: Yup.string()
       .required("Thông tin bắt buộc")
@@ -22,16 +21,22 @@ function FormPhone({ setForm, setPhoneNumber }) {
         (val) => !isNaN(val) && val.length === 10
       ),
   });
-  const handleSubmit = (values) => {
-    axios.post('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/login-customer', { phone_number: values.sdt }, {
+  const handleSubmit = async (values) => {
+    let data = await fetch('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/login-customer', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      credentials: 'same-origin', // include, *same-origin, omit
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/login-customer'
-      }
-    }).then(data => {
-      setOTP(data)
-      console.log(data)
+
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRF-TOKEN': '{{csrf_token()}}'
+      },
+      body: JSON.stringify({ phone_number: values.sdt }) // body data type must match "Content-Type" header
     })
+    data = await data.json()
+    console.log(data)
+    setOTP(data)
     setForm(2);
     setPhoneNumber(values.sdt);
   };

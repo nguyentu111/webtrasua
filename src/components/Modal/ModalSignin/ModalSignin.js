@@ -26,6 +26,7 @@ const cx = classNames.bind(styles);
 function ModalSignin({ openModel, setOpenModel }) {
   const [form, setForm] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOTP] = useState()
   const handleBack = () => {
     setForm(1);
   };
@@ -70,12 +71,13 @@ function ModalSignin({ openModel, setOpenModel }) {
         <div className={cx("modal-content")}>
           <div className={cx("modal-body")}>
             {form === 1 && (
-              <FormPhone setForm={setForm} setPhoneNumber={setPhoneNumber} />
+              <FormPhone setForm={setForm} setPhoneNumber={setPhoneNumber} setOTP={setOTP} />
             )}
             {form === 2 && (
               <FormPassWord
                 setForm={setForm}
                 phoneNumber={phoneNumber}
+                otp={otp}
                 setOpenModel={setOpenModel}
               />
             )}

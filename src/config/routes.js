@@ -5,5 +5,6 @@ const routes = {
   productDetail: "/products/:id",
   admin: "/admin",
   customer: "/customer/*",
+  customer_register: "/customer/register"
 };
 export default routes;

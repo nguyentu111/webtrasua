@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
+function FormPassWord({ setForm, phoneNumber, setOpenModel, otp }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const validationShema = Yup.object().shape({
@@ -19,13 +19,19 @@ function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
   });
   const handleSubmit = async (values) => {
     try {
-      const actionResult = await dispatch(
-        loginUser({ phoneNumber, password: values.password })
-      );
-      const loggedUser = unwrapResult(actionResult);
-      // console.log({ loggedUser });
-      setOpenModel(false);
-      navigate('/customer/account')
+      if (otp.fakeOTP != values.password) {
+        setOpenModel(false);
+      }
+      else {
+        const actionResult = await dispatch(
+          loginUser({ result: 'true', phone_number: phoneNumber })
+        );
+        const loggedUser = unwrapResult(actionResult);
+        console.log({ loggedUser });
+
+        setOpenModel(false);
+        if (loggedUser.status === 'fail') navigate('/customer/register')
+      }
     } catch (e) {
       // console.log("dang nhap that bai !! ", e);
     }
@@ -73,7 +79,7 @@ function FormPassWord({ setForm, phoneNumber, setOpenModel }) {
                 className={cx("btn-forget-password")}
                 onClick={handleForgetPass}
               >
-                Bạn quên mật khẩu ?
+                Gửi lại OTP
               </button>
             </FormGroup>
           </Form>

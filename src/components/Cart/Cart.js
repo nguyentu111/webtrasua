@@ -7,21 +7,28 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ClickAwayListener, Drawer } from "@mui/material";
 import classNames from "classnames/bind";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
 import ModalCoupon from "../Modal/ModalCoupon/ModalCoupon";
 import styles from "./Cart.module.scss";
 import { ArrowRight } from "~/assets/Icons";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-
-import { useCart } from "~/context/cartContext";
+import { useSelector } from "react-redux";
+import { useCart, useDispatchCart } from "~/context/cartContext";
+import axios from "axios";
 const cx = classNames.bind(styles);
 function Cart() {
+  const currentUser = useSelector((state) => state.user.current);
   const [open, setOpen] = useState(false);
   const [openModalCoupon, setOpenModalCoupon] = useState(false);
   const anchor = "right";
   const items = useCart()
+  const dispatch = useDispatchCart()
   const [it, setItems] = useState(items.length)
+  const [a, setA] = useState(0)
+  useEffect(() => {
+    setA(prev => prev + 1)
+  }, [open])
   const sum = items.reduce(
     (accumulator, currentValue) => accumulator + currentValue.qty,
     0,
@@ -69,32 +76,62 @@ function Cart() {
 
       for (let e of temp_Tp.keys()) {
         temp_Tp[e] = {
-          quan: 1, topping: [temp_Tp[e].map((tp) => { return { topping_id: tp.tp.id } })]
+          quan: 1, topping: temp_Tp[e].map((tp) => { return { topping_id: tp.tp.id } })
         }
 
       }
 
 
-      arr.push({ ...element, drink_detail_id: element.size.id, topping_list: temp_Tp })
+      arr.push({ ...element, drink_detail_id: element.size.id, topping_list: temp_Tp, quantity: element.qty })
     });
 
     const re = []
     arr.forEach(element => {
-      const { idcart, size, id, toppings, ...res } = element
+      const { idcart, size, id, toppings, qty, ...res } = element
       re.push(res)
     });
     const post_Order = {
       "staff_id": null,
       "branch_id": 1,
       "shipping_id": 1,
-      "customer_id": null,
+      "customer_id": currentUser.information.id,
       "address_id": null,
       "note": null,
       "created_at": "2022-1-1 12:12:00",
       "paid": 0,
       "order_detail": re
     }
-    console.log(post_Order)
+    var data = JSON.stringify({
+      "staff_id": 1,
+      "branch_id": 1,
+      "shipping_id": 1,
+      "customer_id": 1,
+      "address_id": 1,
+      "note": "chỉ nhận hàng khi đủ số lượng",
+      "paid": 0,
+      "order_detail": re
+    });
+    console.log(data)
+    var config = {
+      method: 'post',
+      url: 'https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/admin/orders',
+      headers: {
+        'Authorization': 'Bearer ' + currentUser.token,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    //dispatch({ type: 'PAY' })
   }
   return (
     <div className={cx("wrapper")}>
@@ -110,7 +147,6 @@ function Cart() {
         anchor={anchor}
         open={open}
         onClose={() => setOpen(false)}
-        ModalProps={{ hideBackdrop: true }}
       >
         <ClickAwayListener
           onClickAway={() => {

@@ -7,6 +7,7 @@ import Customer from "~/pages/Customer/Customer";
 import Home from "~/pages/Home/HomePage";
 import ProductDetail from "~/pages/ProductDetail/ProductDetail";
 import Products from "~/pages/Products/Products";
+import Account from "~/pages/Customer/Account/Account";
 
 const publicRoutes = [
   { path: config.routes.home, component: Home, layout: DefaultLayout },
@@ -25,6 +26,7 @@ const publicRoutes = [
     path: "/*",
     component: () => <Navigate to={"/"} />,
   },
+  {path: config.routes.customer_register, component: Account, layout: DefaultLayout },
 ];
 const privateRoutes = [{ path: config.routes.customer, component: Customer }];
 
