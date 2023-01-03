@@ -18,6 +18,7 @@ import { useCart, useDispatchCart } from "~/context/cartContext";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import ChooseShippingAddress from "../Modal/ChooseShippingAddress/ChooseShippingAddress";
+import ModalSignin from "../Modal/ModalSignin/ModalSignin";
 const cx = classNames.bind(styles);
 function Cart() {
   const currentUser = useSelector((state) => state.user.current);
@@ -25,6 +26,7 @@ function Cart() {
 
   const [open, setOpen] = useState(false);
   const [openAddressModel, setOpenAddressModel] = useState(false);
+  const [openModelSignin, setOpenModelSignin] = useState(false);
   const [addressChoosed, setAddressChoosed] = useState(
     currentUser?.information?.addresses[0]?.id
   );
@@ -44,6 +46,10 @@ function Cart() {
   );
 
   const pay = () => {
+    if (!currentUser?.information) {
+      setOpenModelSignin(true);
+      return;
+    }
     setOpenAddressModel(true);
   };
   const handleConfirmBooking = () => {
@@ -222,6 +228,10 @@ function Cart() {
               setOpenModel={setOpenAddressModel}
               handleConfirm={handleConfirmBooking}
               setAddressChoosed={setAddressChoosed}
+            />
+            <ModalSignin
+              openModel={openModelSignin}
+              setOpenModel={setOpenModelSignin}
             />
           </div>
         </ClickAwayListener>

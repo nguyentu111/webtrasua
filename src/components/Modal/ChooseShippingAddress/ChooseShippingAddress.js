@@ -46,7 +46,7 @@ function ChooseShippingAddress({
                 Chọn địa chỉ
               </h2>
               <select onChange={(e) => setAddressChoosed(e.target.value)}>
-                {currentUser.information.addresses.map((ad) => (
+                {currentUser?.information?.addresses?.map((ad) => (
                   <option value={ad.id}>{ad.address}</option>
                 ))}
               </select>
