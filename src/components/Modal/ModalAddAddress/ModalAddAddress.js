@@ -6,7 +6,10 @@ import { FastField, Field, Form, Formik } from "formik";
 import styles from "./ModalAddAddress.module.scss";
 import InputMuiField from "~/components/custom-fields/InputMuiField/InputMuiField";
 import SelectMuiField from "~/components/custom-fields/SelectMuiField/SelectMuiField";
+import { axiosClient } from "~/utils/request";
 import * as Yup from "yup";
+import axios from "axios";
+import { useSelector } from "react-redux";
 const styleModal = {
   backgroundColor: "#fff",
   position: "relative",
@@ -20,36 +23,59 @@ const styleModal = {
   borderRadius: "10px",
   padding: "20px",
 };
-const options = [
-  { id: "1", value: "nam" },
-  { id: "2", value: "nu" },
-];
+
 const initialValues = {
-  fullname: "",
-  phoneNumber: "",
-  province: "",
-  district: "",
   address: "",
-  commune: "",
 };
 const validationShema = Yup.object().shape({
-  fullname: Yup.string()
+  address: Yup.string()
     .min(2, "Họ tên tối thiểu 2 ký tự")
-    .matches(/^[A-Za-z ]*$/, "Họ tên chỉ bao gồm ký tự chữ và dấu cách")
     .required("Thông tin bắt buộc "),
-  province: Yup.string().required("Thông tin bắt buộc"),
-  district: Yup.string().required("Thông tin bắt buộc"),
-  address: Yup.string().required("Thông tin bắt buộc"),
-  commune: Yup.string().required("Thông tin bắt buộc"),
-  phoneNumber: Yup.string()
-    .required("Thông tin bắt buộc")
-    .matches(/^[0-9 ]*$/, "Số điện thoại chỉ bao gồm số"),
 });
 const cx = classNames.bind(styles);
 function ModalAddAddress({ openModel, setOpenModel }) {
-  const handleSubmit = (value) => {
-    // console.log(value);
+  const currentUser = useSelector((state) => state.user.current);
+
+  const handleSubmit = async (value) => {
+    // fetch(
+    //   `https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/admin/customers/${currentUser.information.id}/add-address`,
+    //   {
+    //     method: "POST", // *GET, POST, PUT, DELETE, etc.
+    //     mode: "cors", // no-cors, *cors, same-origin
+    //     credentials: "same-origin", // include, *same-origin, omit
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + currentUser.token,
+    //       // 'Content-Type': 'application/x-www-form-urlencoded',
+    //       "X-CSRF-TOKEN": "{{csrf_token()}}",
+    //     },
+    //     body: JSON.stringify({
+    //       address: value,
+    //     }), // body data type must match "Content-Type" header
+    //   }
+    // )
+    //   .then((data) => data.json())
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.error(err));
+    try {
+      const data = await axios.post(
+        `https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/admin/customers/${currentUser.information.id}/add-address`,
+        {
+          address: value,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + currentUser.token,
+            Accept: "application/json",
+          },
+        }
+      );
+      console.log({ data });
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <Modal
       open={openModel}
@@ -77,84 +103,22 @@ function ModalAddAddress({ openModel, setOpenModel }) {
                 //do somthing here
 
                 return (
-                  <>
-                    <Form>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} md={6}>
-                          <FormGroup>
-                            <FastField
-                              name="fullname"
-                              component={InputMuiField}
-                              label="Họ & tên"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <FormGroup>
-                            <Field
-                              name="phoneNumber"
-                              component={InputMuiField}
-                              label="Số điện thoại"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <FormGroup>
-                            <Field
-                              name="province"
-                              component={SelectMuiField}
-                              id="id"
-                              value="value"
-                              initId=""
-                              label="Tỉnh/Thành phố"
-                              options={options}
-                              nooptionstext="Không tìm thấy bản ghi nào!"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <FormGroup>
-                            <Field
-                              name="district"
-                              component={SelectMuiField}
-                              id="id"
-                              value="value"
-                              initId=""
-                              label="Quận/Huyện"
-                              options={options}
-                              nooptionstext="Không tìm thấy bản ghi nào!"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <FormGroup>
-                            <Field
-                              name="commune"
-                              component={SelectMuiField}
-                              id="id"
-                              value="value"
-                              initId=""
-                              label="Phường/Xã"
-                              options={options}
-                              nooptionstext="Không tìm thấy bản ghi nào!"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <FormGroup>
-                            <Field
-                              name="address"
-                              component={InputMuiField}
-                              label="Địa chỉ"
-                            />
-                          </FormGroup>
-                        </Grid>
+                  <Form>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={6}>
+                        <FormGroup>
+                          <FastField
+                            name="address"
+                            component={InputMuiField}
+                            label="Địa chỉ"
+                          />
+                        </FormGroup>
                       </Grid>
-                      <button type="submit" className={cx("btn-submit")}>
-                        Lưu thay đổi
-                      </button>
-                    </Form>
-                  </>
+                    </Grid>
+                    <button type="submit" className={cx("btn-submit")}>
+                      Lưu
+                    </button>
+                  </Form>
                 );
               }}
             </Formik>

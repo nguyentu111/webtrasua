@@ -9,3 +9,4 @@ export const get = async (path, options = {}) => {
 };
 
 export default request;
+export const axiosClient = request;

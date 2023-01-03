@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import classNames from "classnames/bind";
 import { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import ModalAddAddress from "~/components/Modal/ModalAddAddress/ModalAddAddress";
 import styles from "./AddressBook.module.scss";
 import AddressBookItem from "./AddressBookItem/AddressBookItem";
@@ -8,7 +9,8 @@ const cx = classNames.bind(styles);
 
 function AddressBook() {
   const [openModel, setOpenModel] = useState(false);
-
+  const currentUser = useSelector((state) => state.user.current);
+  console.log("Current user: ", currentUser);
   const handleAddAddress = useCallback((e) => {
     setOpenModel(true);
   }, []);
@@ -26,12 +28,11 @@ function AddressBook() {
         </div>
         <div className={cx("container")}>
           <Grid container spacing={2}>
-            <Grid item md={6} sm={12}>
-              <AddressBookItem />
-            </Grid>
-            <Grid item md={6} sm={12}>
-              <AddressBookItem />
-            </Grid>
+            {currentUser.information.addresses.map((address) => (
+              <Grid item md={6} sm={12}>
+                <AddressBookItem address={address} />
+              </Grid>
+            ))}
           </Grid>
         </div>
       </div>

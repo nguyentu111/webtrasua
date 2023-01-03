@@ -139,17 +139,17 @@ function Cart() {
       data: JSON.stringify(post_Order),
     };
 
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-        if (response.data.status === "success") {
-          toast.success("Order thành công");
-          setOpenAddressModel(false);
-        } else toast.error("Order thất bại, hãy thử lại sau");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(response.data);
+    //     if (response.data.status === "success") {
+    //       toast.success("Order thành công");
+    //       setOpenAddressModel(false);
+    //     } else toast.error("Order thất bại, hãy thử lại sau");
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
   return (
     <div className={cx("wrapper")}>
