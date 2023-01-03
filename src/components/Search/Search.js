@@ -10,7 +10,7 @@ import HeadlessTippy from "@tippyjs/react/headless";
 import { SearchIcon } from "~/assets/Icons";
 import BavarageItem from "./BavarageItem/BavarageItem";
 import BavarageItemLoading from "./BavarageItemLoading/BavarageItemLoading";
-import { searchMood } from "~/services/searchService";
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -19,14 +19,14 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
   const debounced = useDebounce(searchValue, 500);
-
-  const [searchValue1, setSearchValue1] = useState("");
-  const [searchResult1, setSearchResult1] = useState([]);
-  const [showResult1, setShowResult1] = useState(true);
-  const [loading1, setLoading1] = useState(false);
-  const [mood, setMood] = useState()
-  const inputRef1 = useRef();
-  const debounced1 = useDebounce(searchValue1, 500);
+  const nav = useNavigate();
+  // const [searchValue1, setSearchValue1] = useState("");
+  // const [searchResult1, setSearchResult1] = useState([]);
+  // const [showResult1, setShowResult1] = useState(true);
+  // const [loading1, setLoading1] = useState(false);
+  // const [mood, setMood] = useState();
+  // const inputRef1 = useRef();
+  // const debounced1 = useDebounce(searchValue1, 500);
 
   useEffect(() => {
     if (!debounced.trim()) {
@@ -39,12 +39,12 @@ function Search() {
     const fetchAPI = async () => {
       setLoading(true);
       setSearchResult([]);
-      const result = await searchServices(debounced, signal);
-
-      setSearchResult(result);
+      const { data } = await searchServices(debounced, signal);
+      setSearchResult(data.data);
       setLoading(false);
     };
     fetchAPI();
+    return () => abortController.abort();
   }, [debounced]);
   const handleClear = () => {
     setSearchValue("");
@@ -60,41 +60,41 @@ function Search() {
     setSearchValue(searchValue);
   };
 
-  useEffect(() => {
-    if (!debounced1.trim()) {
-      setSearchResult1([]);
-      return;
-    }
-    setLoading1(true);
+  // useEffect(() => {
+  //   if (!debounced1.trim()) {
+  //     setSearchResult1([]);
+  //     return;
+  //   }
+  //   setLoading1(true);
 
-    const fetchAPI1 = async () => {
-      setLoading1(true);
-      setSearchResult1([]);
-      const result = await searchMood(searchValue1);
-      setMood(result)
+  //   const fetchAPI1 = async () => {
+  //     setLoading1(true);
+  //     setSearchResult1([]);
+  //     const result = await searchMood(searchValue1);
+  //     setMood(result);
 
-      setSearchResult1(result.list.special)
-      console.log(result.list.special)
-      setLoading1(false);
-    };
-    fetchAPI1();
-  }, [debounced1]);
-  const handleClear1 = () => {
-    setSearchValue1("");
-    setSearchResult1([]);
-    inputRef1.current.focus();
-  };
-  const handleHideResult1 = () => {
-    setShowResult1(false);
-  };
-  const handleChange1 = (e) => {
-    const searchValue1 = e.target.value;
-    if (searchValue1.startsWith(" ")) return;
-    setSearchValue1(searchValue1);
-  };
-  useEffect(() => {
-    setMood(undefined);
-  }, [searchValue1])
+  //     setSearchResult1(result.list.special);
+  //     console.log(result.list.special);
+  //     setLoading1(false);
+  //   };
+  //   fetchAPI1();
+  // }, [debounced1]);
+  // const handleClear1 = () => {
+  //   setSearchValue1("");
+  //   setSearchResult1([]);
+  //   inputRef1.current.focus();
+  // };
+  // const handleHideResult1 = () => {
+  //   setShowResult1(false);
+  // };
+  // const handleChange1 = (e) => {
+  //   const searchValue1 = e.target.value;
+  //   if (searchValue1.startsWith(" ")) return;
+  //   setSearchValue1(searchValue1);
+  // };
+  // useEffect(() => {
+  //   setMood(undefined);
+  // }, [searchValue1]);
   return (
     <div>
       <div className={cx("searchbar")}>
@@ -108,8 +108,15 @@ function Search() {
               <PoperWrapper>
                 <div className={cx("bavarage-label")}>Kết quả tìm kiếm:</div>
                 <div className={cx("reasult_wrapp")}>
-                  {searchResult.map((result) => (
-                    <BavarageItem key={result.data.id} data={result.data} />
+                  {searchResult.map((drink) => (
+                    <div
+                      onClick={() => {
+                        setShowResult(false);
+                        nav("/products/" + drink.id);
+                      }}
+                    >
+                      <BavarageItem key={drink.id} data={drink} />
+                    </div>
                   ))}
                   {loading && (
                     <div style={{ marginBottom: "20px" }}>
@@ -151,7 +158,7 @@ function Search() {
           </div>
           {/* loadding */}
         </HeadlessTippy>
-        <span className={cx("spanf4m")}>Food for mood</span>
+        {/* <span className={cx("spanf4m")}>Food for mood</span>
         <HeadlessTippy
           visible={(showResult1 && searchResult1.length > 0) || loading1}
           interactive
@@ -202,8 +209,8 @@ function Search() {
               <FontAwesomeIcon icon={faSpinner} className={cx("loading1")} />
             )}
           </div>
-          {/* loadding */}
-        </HeadlessTippy>
+     
+        </HeadlessTippy> */}
       </div>
     </div>
   );

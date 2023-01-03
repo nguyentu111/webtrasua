@@ -51,10 +51,10 @@ const getSugges = async (q, type = "less") => {
   });
 };
 
-const getDrinkByType = async () => {
+const getDrinkByType = async (type) => {
   // fetch api here
   try {
-    const res = request.get("drinks", {});
+    const res = request.get("/drinks-by-typeofdrink-id/" + type, {});
     return res;
   } catch (err) {
     console.error("Loi fetchAPI", err);

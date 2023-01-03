@@ -1,35 +1,32 @@
-import styles from "./ProductDetail.module.scss";
-import classNames from "classnames/bind";
-import { Link, Route, Routes } from "react-router-dom";
-import CategoryDes from "~/components/CategoryDes/CategoryDes";
-import Subcategory from "~/components/SubCategory/Subcategory";
-import Cart from "~/components/Cart/Cart";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Cart as CartIcon } from "~/assets/Icons/BodyIcon";
-import images from "~/assets/images/bavarage";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import BookBavarage from "~/components/Modal/BookBavarage/BookBavarage";
-import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import Cart from "~/components/Cart/Cart";
+import BookBavarage from "~/components/Modal/BookBavarage/BookBavarage";
+import styles from "./ProductDetail.module.scss";
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const [openModel, setOpenModel] = useState(false);
-  const { id } = useParams()
-  const [data, setData] = useState([])
+  const { id } = useParams();
+  const [data, setData] = useState();
   useEffect(() => {
-    axios.get('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks', { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+    axios
+      .get(
+        "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      )
       .then((result) => {
-        const getData = result.data.data.filter((i) => {
-          return i.id == id
-        })
-        return setData(getData[0])
-      })
-      .catch((e) => {
+        const getData = result.data.data.find((i) => {
+          return i.id == id;
+        });
 
+        return setData(getData);
       })
-  }, [id])
+      .catch((e) => {});
+  }, [id]);
   return (
     <>
       <div className={cx("wrapper")}>
@@ -38,14 +35,14 @@ function ProductDetail() {
         </span>
         <div className={cx("content")}>
           <div className={cx("img_wrapper")}>
-            <img className={cx("image")} src={images.trasua} alt="" />
+            <img className={cx("image")} src={data?.imageSource} alt="" />
             <button className={cx("heart_icon")}>
               <FavoriteIcon />
             </button>
           </div>
           <div className={cx("right_content")}>
-            <div className={cx("name")}>{data.name}</div>
-            <div className={cx("price")}>{data.price}&nbsp;đ</div>
+            <div className={cx("name")}>{data?.name}</div>
+            <div className={cx("price")}>{data?.price}&nbsp;đ</div>
             <button
               className={cx("btn")}
               onClick={() => {
@@ -61,7 +58,13 @@ function ProductDetail() {
         </div>
         <Cart />
       </div>
-      {data.length === 0 ? console.log('loading') : <BookBavarage data={data} openModel={openModel} setOpenModel={setOpenModel} />}
+      {data && (
+        <BookBavarage
+          data={data}
+          openModel={openModel}
+          setOpenModel={setOpenModel}
+        />
+      )}
     </>
   );
 }

@@ -2,7 +2,6 @@ import styles from "./BavarageItem.module.scss";
 import className from "classnames/bind";
 const cx = className.bind(styles);
 function BavarageItem({ data }) {
-  console.log(data)
   return (
     <div className={cx("wrapper")}>
       <div className="img_wrapper">

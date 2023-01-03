@@ -10,11 +10,29 @@ import ProductList from "../../components/ProductList/ProductList";
 const cx = classNames.bind(styles);
 function Products() {
   const { category } = useParams();
+  let type;
+  switch (category) {
+    case "tra-sua":
+      type = 1;
+      break;
+    case "ca-phe":
+      type = 2;
+      break;
+    case "tra":
+      type = 3;
+      break;
+    case "nuoc-ep":
+      type = 4;
+      break;
+    default:
+      type = 1;
+  }
+
   return (
     <div className={cx("wrapper")}>
       {/* <Subcategory /> */}
       <CategoryDes />
-      <ProductList type={category} />
+      <ProductList type={type} />
       <Cart />
     </div>
   );

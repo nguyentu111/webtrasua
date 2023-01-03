@@ -12,57 +12,87 @@ import axios from "axios";
 const cx = classNames.bind(styles);
 
 function CartItem(props) {
-  const items = useCart()
-  const dispatch = useDispatchCart()
-  
+  // const item = useCart()?.find((item) => item.id === props.item.id);
+  const dispatch = useDispatchCart();
+
   const [quantity, setQuantity] = useState();
   const [openModel, setOpenModel] = useState(false);
-  const [fix, setFix] = useState(false)
-
-  const [data, setData] = useState([])
-
-
+  // console.log(item);
+  // const [fix, setFix] = useState(false);
+  let toppingDes = props.item.toppings.reduce((acc, curr) => {
+    return acc + curr.tp.name + ", ";
+  }, "");
+  const [data, setData] = useState();
   useEffect(() => {
-    setQuantity(props.item.qty)
-    axios.get('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks', { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+    setQuantity(props.item.qty);
+    axios
+      .get(
+        "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      )
       .then((result) => {
-        const getData = result.data.data.filter((i) => {
-          return i.id == props.item.id
-        })
-        return setData(getData[0])
+        const getData = result.data.data.find((i) => {
+          return i.id == props.item.id;
+        });
+        return setData(getData);
       })
-      .catch((e) => {
-
-      })
-  }, [props.item.qty])
-
+      .catch((e) => {});
+  }, []);
   return (
     <>
       <div className={cx("wapper")}>
         <div className={cx("img-wrapper")}>
-          <img src={images.trasua} alt="" className={cx("img")} />
+          <img src={data?.imageSource} alt="" className={cx("img")} />
         </div>
         <div className={cx("info")}>
-          <div className={cx("name")}>{data.name}</div>
+          <div className={cx("name")}>{data?.name}</div>
+          <div className={cx("options")}>Kích cỡ: {props.item.size.name}</div>
           <div className={cx("options")}>
-            Kích cỡ: {props.item.size.name}
+            Topping: {toppingDes.slice(0, -2) || "Không"}
           </div>
           <div className={cx("bot")}>
             <div className={cx("price")}>{props.item.price} ₫</div>
             {/*  */}
-            <QuantityBtns id={props.item.idcart} value={quantity} setValue={setQuantity} setItems={props.setItems} />
+            <QuantityBtns
+              id={props.item.idcart}
+              value={quantity}
+              setValue={setQuantity}
+              setItems={props.setItems}
+            />
           </div>
         </div>
         <div className={cx("actions")}>
-          <button className={cx("edit")} onClick={() => { setOpenModel(true); setFix(true) }}>
+          <button
+            className={cx("edit")}
+            onClick={() => {
+              setOpenModel(true);
+              // setFix(true);
+            }}
+          >
             <FontAwesomeIcon icon={faPen} />
           </button>
-          <button className={cx("delete")} onClick={() => dispatch({ type: 'DEL', item: props.item })}>
+          <button
+            className={cx("delete")}
+            onClick={() => dispatch({ type: "DEL", item: props.item })}
+          >
             <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
       </div>
-      {data.length == 0 ? <></> : <BookBavarage data={data} openModel={openModel} setOpenModel={setOpenModel} isFix={fix} setFix={setFix} itemFix={props.item} setValue={setQuantity} setItems={props.setItems} />}
+
+      {data && (
+        <BookBavarage
+          data={data}
+          // id={item.id}
+          openModel={openModel}
+          setOpenModel={setOpenModel}
+          isFix={true}
+          // setFix={setFix}
+          itemFix={props.item}
+          setValue={setQuantity}
+          setItems={props.setItems}
+        />
+      )}
     </>
   );
 }

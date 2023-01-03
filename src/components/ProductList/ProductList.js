@@ -16,11 +16,11 @@ function ProductList({ type }) {
   const [drinks, setDrinks] = useState([]);
   useEffect(() => {
     const getDrinks = async () => {
-      const { data } = await bavarageApi.getDrinkByType();
+      const { data } = await bavarageApi.getDrinkByType(type);
       setDrinks(data);
     };
     getDrinks();
-  }, []);
+  }, [type]);
   return (
     <Grid spacing={2} container justifyContent="start" columns={12}>
       {drinks.map((v, i) => {

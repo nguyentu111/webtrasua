@@ -15,19 +15,23 @@ function SuggessionProducts() {
   useEffect(() => {
     setLoading(true);
     const abortController = new AbortController();
-    const { signal } = abortController;
     const fetchAPI = async () => {
       setLoading(true);
       //const result = await bavarageApi.getSugges(signal);
-      axios.get('https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks',{headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+      axios
+        .get(
+          "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+        )
         .then((result) => {
           setSuggesBavarage(result.data.data);
           setLoading(false);
         })
         .catch((e) => {
-          console.log(e)
-        })
-
+          console.log(e);
+        });
     };
     fetchAPI();
   }, []);
