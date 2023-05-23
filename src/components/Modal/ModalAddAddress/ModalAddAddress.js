@@ -67,6 +67,7 @@ function ModalAddAddress({ openModel, setOpenModel }) {
           headers: {
             Authorization: "Bearer " + currentUser.token,
             Accept: "application/json",
+            "X-CSRF-TOKEN": "{{csrf_token()}}",
           },
         }
       );
@@ -105,7 +106,7 @@ function ModalAddAddress({ openModel, setOpenModel }) {
                 return (
                   <Form>
                     <Grid container spacing={2}>
-                      <Grid item xs={12} md={6}>
+                      <Grid item xs={12} md={12}>
                         <FormGroup>
                           <FastField
                             name="address"

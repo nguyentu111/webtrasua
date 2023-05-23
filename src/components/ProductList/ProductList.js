@@ -10,17 +10,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import bavarageApi from "../../services/bavarageApi";
 import ProductCard from "../ProductCard/ProductCard";
+import { dataDrinks } from "../../constant/fakedata";
 const cx = classNames.bind(styles);
 
 function ProductList({ type }) {
-  const [drinks, setDrinks] = useState([]);
-  useEffect(() => {
-    const getDrinks = async () => {
-      const { data } = await bavarageApi.getDrinkByType(type);
-      setDrinks(data);
-    };
-    getDrinks();
-  }, [type]);
+  // const [drinks, setDrinks] = useState([]);
+  // useEffect(() => {
+  //   const getDrinks = async () => {
+  //     const { data } = await bavarageApi.getDrinkByType(type);
+  //     setDrinks(data);
+  //   };
+  //   getDrinks();
+  // }, [type]);
+  const drinks = dataDrinks.filter((drink) => drink.typeOfDrink[0].id === type);
   return (
     <Grid spacing={2} container justifyContent="start" columns={12}>
       {drinks.map((v, i) => {

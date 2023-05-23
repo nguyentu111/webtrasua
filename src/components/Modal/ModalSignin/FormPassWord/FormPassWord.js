@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { FastField, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { loginUser } from "~/app/userSlice";
+import { login } from "~/app/userSlice";
 import InputField from "~/components/custom-fields/InputField";
 import styles from "./FormPassWord.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -19,31 +19,33 @@ function FormPassWord({ setForm, phoneNumber, setOpenModel, otp }) {
     password: Yup.string().required("Thông tin bắt buộc"),
   });
   const handleSubmit = async (values) => {
-    console.log({ otp });
-    try {
-      if (String(otp.fakeOTP) !== values.password) {
-        // setOpenModel(false);
-      } else {
-        // const { data } = await axios.post(
-        //   "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/customer/otp-authentication",
-        //   {
-        //     result: true,
-        //     phone_number: phoneNumber,
-        //   }
-        // );
-        // console.log(data);
-        const actionResult = await dispatch(
-          loginUser({ result: "true", phone_number: phoneNumber })
-        );
-        const loggedUser = unwrapResult(actionResult);
-        console.log({ loggedUser });
+    setOpenModel(false);
+    dispatch(login());
+    //console.log({ otp });
+    // try {
+    //   if (String(otp.fakeOTP) !== values.password) {
+    //     // setOpenModel(false);
+    //   } else {
+    //     // const { data } = await axios.post(
+    //     //   "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/customer/otp-authentication",
+    //     //   {
+    //     //     result: true,
+    //     //     phone_number: phoneNumber,
+    //     //   }
+    //     // );
+    //     // console.log(data);
+    //     const actionResult = await dispatch(
+    //       loginUser({ result: "true", phone_number: phoneNumber })
+    //     );
+    //     const loggedUser = unwrapResult(actionResult);
+    //     // console.log({ loggedUser });
 
-        setOpenModel(false);
-        if (loggedUser.status === "fail") navigate("/customer/register");
-      }
-    } catch (e) {
-      // console.log("dang nhap that bai !! ", e);
-    }
+    //     setOpenModel(false);
+    //     if (loggedUser.status === "fail") navigate("/customer/register");
+    //   }
+    // } catch (e) {
+    //   // console.log("dang nhap that bai !! ", e);
+    // }
     return;
   };
   const handleForgetPass = () => {

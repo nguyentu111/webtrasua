@@ -23,9 +23,9 @@ function ProductCard({ data }) {
         <div className={cx("wrapper")}>
           <div className={cx("image-wrapper")}>
             <img src={imageSource} alt="" className={cx("image")} />
-            <button className={cx("heart_icon")}>
+            {/* <button className={cx("heart_icon")}>
               <FavoriteIcon />
-            </button>
+            </button> */}
           </div>
           <div className={cx("content")}>
             <span className={cx("name")}>{name}</span>
@@ -38,7 +38,11 @@ function ProductCard({ data }) {
         </div>
       </Grid>
 
-      <BookBavarage data={data} openModel={openModel} setOpenModel={setOpenModel} />
+      <BookBavarage
+        data={data}
+        openModel={openModel}
+        setOpenModel={setOpenModel}
+      />
     </Link>
   );
 }

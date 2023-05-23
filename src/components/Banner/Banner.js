@@ -6,7 +6,7 @@ import images from "~/assets/images/banner";
 import "react-slideshow-image/dist/styles.css";
 const slideImages = [images.slide1, images.slide2];
 const properties = {
-  duration: 2000,
+  duration: 1500,
   transitionDuration: 500,
   infinite: true,
   indicators: true,
