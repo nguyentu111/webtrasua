@@ -9,8 +9,6 @@ import { useState, useEffect } from "react";
 import BookBavarage from "../Modal/BookBavarage/BookBavarage";
 import { useCart, useDispatchCart } from "~/context/cartContext";
 import axios from "axios";
-import { dataDrinks } from "../../constant/fakedata";
-
 const cx = classNames.bind(styles);
 
 function CartItem(props) {
@@ -24,29 +22,27 @@ function CartItem(props) {
   let toppingDes = props.item.toppings.reduce((acc, curr) => {
     return acc + curr.tp.name + ", ";
   }, "");
-  // const [data, setData] = useState();
-  const data = dataDrinks.find((drink) => drink.id === props.item.id);
-  console.log({ item: data });
+  const [data, setData] = useState();
   useEffect(() => {
     setQuantity(props.item.qty);
-    // axios
-    //   .get(
-    //     "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
-    //     { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-    //   )
-    //   .then((result) => {
-    //     const getData = result.data.data.find((i) => {
-    //       return i.id == props.item.id;
-    //     });
-    //     return setData(getData);
-    //   })
-    //   .catch((e) => {});
+    axios
+      .get(
+        "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      )
+      .then((result) => {
+        const getData = result.data.data.find((i) => {
+          return i.id == props.item.id;
+        });
+        return setData(getData);
+      })
+      .catch((e) => {});
   }, []);
   return (
     <>
       <div className={cx("wapper")}>
         <div className={cx("img-wrapper")}>
-          <img src={data.imageSource} alt="" className={cx("img")} />
+          <img src={data?.imageSource} alt="" className={cx("img")} />
         </div>
         <div className={cx("info")}>
           <div className={cx("name")}>{data?.name}</div>

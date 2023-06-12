@@ -32,18 +32,16 @@ function BookBavarage({
 }) {
   const [quantity, setQuantity] = useState(1);
   const items = useCart();
-
   const [item, setItem] = useState({
     idcart: 0,
     qty: 1,
     id: data.id,
-    price: data.price,
+    price: itemFix?.price || data.price,
     size: data.size.find((s) => s.name === "S"),
     toppings: [],
     name: data.name,
     image: data.imageSource,
   });
-  console.log({ isFix, price: item?.price });
   useEffect(() => {
     const totalTopping = item.toppings.reduce((acc, current) => {
       return acc + current.sl * +current.tp.price;
@@ -51,7 +49,7 @@ function BookBavarage({
 
     const total = +data.price + Math.round(item.size.price) + totalTopping;
 
-    // setItem((prev) => ({ ...prev, price: total }));
+    setItem((prev) => ({ ...prev, price: total }));
   }, [item.qty, item.size.id, item.toppings]);
   try {
     useEffect(() => {
@@ -308,9 +306,7 @@ function BookBavarage({
               >
                 <FontAwesomeIcon icon={faCartPlus} />
                 <span style={{ marginLeft: "10px" }}>
-                  {isFix
-                    ? `Lưu thau đổi : ${item.price * item.qty} đ `
-                    : ` Thêm vào giỏ hàng : ${item.price * item.qty} đ `}
+                  Thêm vào giỏ hàng : {item.price * item.qty} &nbsp;đ
                 </span>
               </button>
             </div>

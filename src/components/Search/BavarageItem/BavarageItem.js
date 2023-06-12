@@ -5,7 +5,7 @@ function BavarageItem({ data }) {
   return (
     <div className={cx("wrapper")}>
       <div className="img_wrapper">
-        <img src={data.imageSource} alt="do uong" className={cx("img")} />
+        <img src={data.image} alt="do uong" className={cx("img")} />
       </div>
       <div className={cx("info")}>
         <div className={cx("info_name")}>{data.name}</div>

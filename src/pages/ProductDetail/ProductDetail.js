@@ -7,29 +7,26 @@ import { Link, useParams } from "react-router-dom";
 import Cart from "~/components/Cart/Cart";
 import BookBavarage from "~/components/Modal/BookBavarage/BookBavarage";
 import styles from "./ProductDetail.module.scss";
-import { dataDrinks } from "../../constant/fakedata";
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const [openModel, setOpenModel] = useState(false);
   const { id } = useParams();
-  // const [data, setData] = useState();
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
-  //       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-  //     )
-  //     .then((result) => {
-  //       const getData = result.data.data.find((i) => {
-  //         return i.id == id;
-  //       });
+  const [data, setData] = useState();
+  useEffect(() => {
+    axios
+      .get(
+        "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      )
+      .then((result) => {
+        const getData = result.data.data.find((i) => {
+          return i.id == id;
+        });
 
-  //       return setData(getData);
-  //     })
-  //     .catch((e) => {});
-  // }, [id]);
-  const data = dataDrinks.find((drink) => drink.id == id);
-  console.log({ id });
+        return setData(getData);
+      })
+      .catch((e) => {});
+  }, [id]);
   return (
     <>
       <div className={cx("wrapper")}>

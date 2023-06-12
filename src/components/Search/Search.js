@@ -39,9 +39,8 @@ function Search() {
     const fetchAPI = async () => {
       setLoading(true);
       setSearchResult([]);
-      const data = await searchServices(debounced, signal);
-      console.log({ data });
-      setSearchResult(data);
+      const { data } = await searchServices(debounced, signal);
+      setSearchResult(data.data);
       setLoading(false);
     };
     fetchAPI();
@@ -60,6 +59,42 @@ function Search() {
     if (searchValue.startsWith(" ")) return;
     setSearchValue(searchValue);
   };
+
+  // useEffect(() => {
+  //   if (!debounced1.trim()) {
+  //     setSearchResult1([]);
+  //     return;
+  //   }
+  //   setLoading1(true);
+
+  //   const fetchAPI1 = async () => {
+  //     setLoading1(true);
+  //     setSearchResult1([]);
+  //     const result = await searchMood(searchValue1);
+  //     setMood(result);
+
+  //     setSearchResult1(result.list.special);
+  //     console.log(result.list.special);
+  //     setLoading1(false);
+  //   };
+  //   fetchAPI1();
+  // }, [debounced1]);
+  // const handleClear1 = () => {
+  //   setSearchValue1("");
+  //   setSearchResult1([]);
+  //   inputRef1.current.focus();
+  // };
+  // const handleHideResult1 = () => {
+  //   setShowResult1(false);
+  // };
+  // const handleChange1 = (e) => {
+  //   const searchValue1 = e.target.value;
+  //   if (searchValue1.startsWith(" ")) return;
+  //   setSearchValue1(searchValue1);
+  // };
+  // useEffect(() => {
+  //   setMood(undefined);
+  // }, [searchValue1]);
   return (
     <div>
       <div className={cx("searchbar")}>
@@ -73,18 +108,16 @@ function Search() {
               <PoperWrapper>
                 <div className={cx("bavarage-label")}>Kết quả tìm kiếm:</div>
                 <div className={cx("reasult_wrapp")}>
-                  {searchResult.map((drink) => {
-                    return (
-                      <div
-                        onClick={() => {
-                          setShowResult(false);
-                          nav("/products/" + drink.id);
-                        }}
-                      >
-                        <BavarageItem key={drink.id} data={drink} />
-                      </div>
-                    );
-                  })}
+                  {searchResult.map((drink) => (
+                    <div
+                      onClick={() => {
+                        setShowResult(false);
+                        nav("/products/" + drink.id);
+                      }}
+                    >
+                      <BavarageItem key={drink.id} data={drink} />
+                    </div>
+                  ))}
                   {loading && (
                     <div style={{ marginBottom: "20px" }}>
                       <BavarageItemLoading />

@@ -7,35 +7,34 @@ import { useEffect, useState } from "react";
 import bavarageApi from "~/services/bavarageApi";
 import routes from "~/config/routes";
 import categories from "~/constant/category";
-import { dataDrinks } from "../../constant/fakedata";
+import axios from "axios";
 const cx = classNames.bind(styles);
 function SuggessionProducts() {
-  const suggesBavarage = dataDrinks.slice(0, 10);
-  // const [suggesBavarage, setSuggesBavarage] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const abortController = new AbortController();
-  //   const fetchAPI = async () => {
-  //     setLoading(true);
-  //     //const result = await bavarageApi.getSugges(signal);
-  //     axios
-  //       .get(
-  //         "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
-  //         {
-  //           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //         }
-  //       )
-  //       .then((result) => {
-  //         setSuggesBavarage(result.data.data);
-  //         setLoading(false);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   };
-  //   fetchAPI();
-  // }, []);
+  const [suggesBavarage, setSuggesBavarage] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    const abortController = new AbortController();
+    const fetchAPI = async () => {
+      setLoading(true);
+      //const result = await bavarageApi.getSugges(signal);
+      axios
+        .get(
+          "https://backendwebtrasualaravel-production-6fb6.up.railway.app/api/drinks",
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+        )
+        .then((result) => {
+          setSuggesBavarage(result.data.data);
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    fetchAPI();
+  }, []);
   return (
     <div className={cx("wrapper")}>
       <span className={cx("title")}>Sản Phẩm Nổi Bật</span>
